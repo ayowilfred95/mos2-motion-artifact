@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+*.pyc
+figures/*.png
+comsol/*.mph.lock
+.DS_Store
