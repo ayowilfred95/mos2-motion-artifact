@@ -1,0 +1,368 @@
+<title>MoS2 Patch Bench</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#eef2f5; --surface:#ffffff; --surface2:#f6f8fa; --ink:#15202b; --muted:#566575; --line:#d5dde5;
+  --teal:#0b8577; --teal-soft:#d7efeb; --red:#c4413a; --blue:#2e69b0; --amber:#b27b0c; --amber-soft:#f6ebd2;
+  --gold:#c9a227; --skin:#e7c9b5; --skin-edge:#c9a18a;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e141b; --surface:#16202a; --surface2:#1c2733; --ink:#e4ebf2; --muted:#93a2b2; --line:#2a3744;
+    --teal:#38bfae; --teal-soft:#153a36; --red:#ef7a70; --blue:#6fa2e3; --amber:#e3ae45; --amber-soft:#3a2f16;
+    --gold:#e2c05a; --skin:#6d5446; --skin-edge:#8d6d5b; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e141b; --surface:#16202a; --surface2:#1c2733; --ink:#e4ebf2; --muted:#93a2b2; --line:#2a3744;
+  --teal:#38bfae; --teal-soft:#153a36; --red:#ef7a70; --blue:#6fa2e3; --amber:#e3ae45; --amber-soft:#3a2f16;
+  --gold:#e2c05a; --skin:#6d5446; --skin-edge:#8d6d5b; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;padding-inline:16px;padding-block:20px 40px}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:18px}
+header h1{font-size:clamp(22px,3vw,30px);font-weight:700;letter-spacing:-.01em;margin:0;text-wrap:balance}
+header p{margin:4px 0 0;color:var(--muted);max-width:72ch}
+.grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:880px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:14px}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0}
+svg{display:block;width:100%;height:auto;touch-action:none;cursor:grab;border-radius:8px;background:var(--surface2)}
+svg:active{cursor:grabbing}
+.presets{display:flex;flex-wrap:wrap;gap:8px}
+button,select{font:inherit;color:var(--ink)}
+.chip{border:1px solid var(--line);background:var(--surface2);border-radius:999px;padding:6px 12px;cursor:pointer;font-size:13px;font-weight:500}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.chip:focus-visible,select:focus-visible,input:focus-visible,.play:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.play{border:0;background:var(--teal);color:#fff;border-radius:8px;padding:7px 14px;cursor:pointer;font-weight:600;font-size:13px}
+.play[aria-pressed="true"]{background:var(--red)}
+.ctl{display:grid;gap:4px}
+.ctl label{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted)}
+.ctl label b{font-family:var(--mono);font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--teal)}
+select{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface2)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:520px){.row2{grid-template-columns:1fr}}
+.reading{display:grid;gap:2px;padding:14px;border-radius:8px;background:var(--surface2);border:1px solid var(--line)}
+.reading .big{font-family:var(--mono);font-size:clamp(26px,4vw,34px);font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1}
+.reading small{color:var(--muted);font-size:12.5px}
+.state{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;justify-self:start}
+.ok{background:var(--teal-soft);color:var(--teal)} .warn{background:var(--amber-soft);color:var(--amber)} .bad{background:color-mix(in srgb,var(--red) 16%,transparent);color:var(--red)}
+.chain{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:520px){.chain{grid-template-columns:1fr}}
+.cell{padding:10px 12px;border:1px solid var(--line);border-radius:8px;display:grid;gap:2px}
+.cell span{font-size:11.5px;color:var(--muted)}
+.cell b{font-family:var(--mono);font-size:17px;font-variant-numeric:tabular-nums}
+.chart-wrap{position:relative}
+canvas{width:100%;height:190px;display:block;border-radius:8px;background:var(--surface2)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12.5px;color:var(--muted)}
+.legend i{display:inline-block;width:18px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
+.check{display:flex;gap:8px;align-items:center;font-size:13.5px}
+.note{font-size:12.5px;color:var(--muted);margin:0;max-width:80ch}
+.note code{font-family:var(--mono);font-size:12px}
+.hint{font-size:12.5px;color:var(--muted);margin:0}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto}}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>MoS2 cortisol patch: bend it and watch the reading</h1>
+    <p>Bend the sensor by dragging it, with the slider, or with a body motion. The channel strain comes from the Elmer finite-element results for the chosen design. The current change and the reported cortisol come from the paper's sensor model.</p>
+  </header>
+
+  <div class="grid">
+    <section class="panel" aria-labelledby="bend-h">
+      <p class="eyebrow" id="bend-h">1 · Bend the patch</p>
+      <svg id="strip" viewBox="0 0 600 270" role="img" aria-label="Sensor patch on skin; drag up or down to bend">
+        <defs>
+          <linearGradient id="skinG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--skin)"/><stop offset="1" stop-color="var(--skin-edge)"/></linearGradient>
+        </defs>
+        <path id="skin" fill="url(#skinG)"/>
+        <path id="lower" fill="var(--blue)"/>
+        <path id="upper" fill="var(--red)"/>
+        <path id="neutral" fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-dasharray="5 4" opacity=".75"/>
+        <path id="chan" fill="none" stroke="var(--gold)" stroke-width="6" stroke-linecap="round"/>
+        <text id="chanLbl" font-family="var(--sans)" font-size="12" fill="var(--ink)" text-anchor="middle">MoS2 channel</text>
+        <text x="16" y="24" font-family="var(--mono)" font-size="12" fill="var(--muted)" id="svgR">R = 40 mm</text>
+        <text x="584" y="24" font-family="var(--sans)" font-size="11.5" fill="var(--muted)" text-anchor="end">red = stretched · blue = compressed · dashed = neutral plane</text>
+        <text x="300" y="258" font-family="var(--sans)" font-size="11.5" fill="var(--muted)" text-anchor="middle">drag up or down on the patch to bend it (patch thickness drawn much larger than real)</text>
+      </svg>
+      <div class="presets" role="group" aria-label="Body motion">
+        <button class="chip" data-m="flat">Flat</button>
+        <button class="chip" data-m="walking">Walking (1.8 Hz)</button>
+        <button class="chip" data-m="elbow">Elbow flexion</button>
+        <button class="chip" data-m="wrist">Wrist flexion</button>
+        <button class="chip" data-m="hold">Sustained wrist hold</button>
+        <button class="play" id="play" aria-pressed="false">Play motion</button>
+      </div>
+      <div class="ctl">
+        <label for="kap">Curvature <b id="kapV">25.0 1/m</b></label>
+        <input id="kap" type="range" min="-15" max="50" step="0.1" value="25">
+      </div>
+      <div class="row2">
+        <div class="ctl">
+          <label for="design">Sensor design</label>
+          <select id="design"></select>
+        </div>
+        <div class="ctl">
+          <label for="c0">True sweat cortisol <b id="c0V">30 ng/mL</b></label>
+          <input id="c0" type="range" min="5" max="140" step="1" value="30">
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="read-h">
+      <p class="eyebrow" id="read-h">2 · What the sensor reports</p>
+      <div class="row2">
+        <div class="reading">
+          <small>True cortisol</small>
+          <span class="big" id="trueV" style="color:var(--teal)">30.0</span>
+          <small>ng/mL</small>
+        </div>
+        <div class="reading">
+          <small>Sensor reads</small>
+          <span class="big" id="readV">—</span>
+          <small id="readU">ng/mL</small>
+          <span class="state ok" id="readS">accurate</span>
+        </div>
+      </div>
+      <label class="check"><input type="checkbox" id="twin"> Twin-sensor correction (reference channel, 5 % mismatch)</label>
+      <div class="reading" id="twinBox" hidden>
+        <small>Corrected reading</small>
+        <span class="big" id="twinV">—</span>
+        <small id="twinS">ng/mL</small>
+      </div>
+      <p class="eyebrow">How the bend becomes a false reading</p>
+      <div class="chain">
+        <div class="cell"><span>MoS2 strain</span><b id="epsV">0</b></div>
+        <div class="cell"><span>Current change from strain</span><b id="diV">0</b></div>
+        <div class="cell"><span>Artifact, % of full cortisol signal</span><b id="fsV">0</b></div>
+        <div class="cell"><span>Cortisol signal (no bend)</span><b id="sigV">0</b></div>
+        <div class="cell"><span>Strain per curvature (Elmer)</span><b id="epkV">0</b></div>
+        <div class="cell"><span>Reading error</span><b id="errV">0</b></div>
+      </div>
+      <div class="ctl">
+        <label for="vov">Gate overdrive V<sub>ov</sub> <b id="vovV">0.30 V</b></label>
+        <input id="vov" type="range" min="0.05" max="1" step="0.01" value="0.30">
+      </div>
+      <p class="hint">Lower V<sub>ov</sub> raises both the cortisol signal and the strain gauge factor.</p>
+    </section>
+  </div>
+
+  <section class="panel" aria-labelledby="chart-h">
+    <p class="eyebrow" id="chart-h">3 · Reading over time (press Play motion)</p>
+    <div class="chart-wrap"><canvas id="chart" aria-label="True and reported cortisol over the last 10 seconds"></canvas></div>
+    <div class="legend">
+      <span><i style="background:var(--teal)"></i>true cortisol</span>
+      <span><i style="background:var(--red)"></i>sensor reading</span>
+      <span><i style="background:var(--blue)"></i>twin-corrected reading</span>
+      <span>readings above the sensor range are drawn at the top edge</span>
+    </div>
+    <p class="note">Model: channel strain = (strain per curvature of the design, from Elmer 2D plane-strain FE) × curvature, which is exact for this linear problem. η = 0.8 for Al<sub>2</sub>O<sub>3</sub>-capped designs, 1.0 for polymer or buried caps. Rigid island assumes a 100 µm PDMS carrier. Electronics and binding follow <code>motion_artifact_sim.py</code>: GF<sub>ch</sub>(V<sub>ov</sub>) = 15 + 185·e<sup>−(V<sub>ov</sub>−0.05)/0.12</sup>, Schottky barrier shift −5.5 eV per unit strain, contact share r<sub>c</sub> = 0.3, sensitivity cross-talk (1 + 85 ε), Langmuir binding with K<sub>D</sub> = 50 nM at equilibrium, Debye screening at 50 mM (22.97 mV full coverage).</p>
+  </section>
+</div>
+
+<script>
+(function(){
+  // ---------------- model (motion_artifact_sim.py) ----------------
+  const kT = 0.025852, NG = 1e-6 / 362.46 * 1e9;           // nM per ng/mL
+  const KD = 50, kx = 85, rc = 0.3, dPhi = -5.5;
+  const lamD = 0.304 / Math.sqrt(0.05);                     // nm
+  const dVT = 0.100 * Math.exp(-2 / lamD);                  // V at full coverage
+  const GF = V => 15 + 185 * Math.exp(-(V - 0.05) / 0.12);
+  const dIstrain = (e, V) => 1 / ((1 - rc) * Math.exp(-GF(V) * e) + rc * Math.exp(dPhi * e / kT)) - 1;
+  const theta = CnM => CnM / (CnM + KD);
+  function invert(R, V){ const th = Math.max(R * V / dVT, 0); return th >= 1 ? Infinity : KD * th / (1 - th) / NG; }
+
+  // strain per curvature (m), Elmer FE results (elmer/data/raw_mech.json) and the paper's analytic values
+  const DESIGNS = [
+    {id:"base",  name:"Baseline: 25 um PI, 5 nm Al2O3", fe:9.24489e-6, py:9.29418e-6},
+    {id:"pmma",  name:"1 um PMMA cap", fe:11.04841e-6, py:11.10204e-6},
+    {id:"pi12",  name:"Thinner substrate: 12.5 um PI", fe:4.30654e-6, py:4.34415e-6},
+    {id:"pet",   name:"Ultrathin substrate: 2.5 um PET", fe:0.69123e-6, py:0.69752e-6},
+    {id:"bur",   name:"Buried channel (PI / PI)", fe:0.98087e-6, py:1.02238e-6},
+    {id:"isl",   name:"Rigid island (100 um PDMS)", fe:2.11089e-6, py:0.39036e-6},
+    {id:"pre",   name:"Prebent channel (1e-3 ratio)", fe:0.00924e-6, py:0.00929e-6},
+  ];
+  const MOTIONS = {
+    flat:{k:0}, walking:{R:0.300, f:1.8, kind:"osc"}, elbow:{R:0.040, f:0.5, kind:"flex"},
+    wrist:{R:0.025, f:0.5, kind:"flex"}, hold:{R:0.030, kind:"hold"}
+  };
+
+  // ---------------- state ----------------
+  const $ = id => document.getElementById(id);
+  const st = {k:25, design:0, C0:30, V:0.30, twin:false, motion:"elbow", playing:false, t:0};
+  const sel = $("design");
+  DESIGNS.forEach((d, i) => { const o = document.createElement("option"); o.value = i; o.textContent = d.name; sel.appendChild(o); });
+
+  function compute(k){
+    const d = DESIGNS[st.design], e = d.fe * k;
+    const Rtrue = dVT * theta(st.C0 * NG) / st.V;
+    const dI = dIstrain(e, st.V);
+    const Rmeas = Rtrue * (1 + kx * e) + dI;
+    const Rtwin = Rmeas - dI * 1.05;
+    return {e, dI, Rtrue, FS: dVT / st.V, read: invert(Rmeas, st.V), twin: invert(Rtwin, st.V), epk: d.fe, py: d.py};
+  }
+
+  const fmt = (x, n) => (Math.abs(x) < 1e-12 ? 0 : x).toFixed(n);
+  function sgn(x, n){ const s = fmt(x, n); return (x > 0 && Number(s) !== 0 ? "+" : "") + s; }
+
+  // ---------------- drawing the bent patch ----------------
+  const L = 440, T = 30, cx = 300, cy = 150;          // strip length and (drawn) thickness in px
+  const ZN = 13.49 / 25.06;                            // neutral plane fraction of thickness (baseline)
+  function arcPts(k, offset, n){
+    // centre line: circular arc through (cx, cy); k>0 = arch (sensor on the outside of the bend)
+    const th = k * 0.010 * 1.6;                        // bend angle of a 10 mm patch, drawn x1.6
+    const pts = [];
+    for (let i = 0; i <= n; i++){
+      const s = (i / n - 0.5) * L;
+      if (Math.abs(th) < 1e-6){ pts.push([cx + s, cy - offset]); continue; }
+      const R = L / th, a = s / R;
+      const r = R + offset;
+      pts.push([cx + r * Math.sin(a), cy + R - r * Math.cos(a)]);
+    }
+    return pts;
+  }
+  const P2 = p => p.map((q, i) => (i ? "L" : "M") + q[0].toFixed(1) + " " + q[1].toFixed(1)).join(" ");
+  function band(k, o1, o2){ const a = arcPts(k, o1, 60), b = arcPts(k, o2, 60).reverse(); return P2(a) + " " + P2(b).replace("M", "L") + " Z"; }
+
+  function drawStrip(k, e){
+    const top = T * (1 - ZN), bot = -T * ZN;
+    const mag = Math.min(1, Math.abs(k) / 40);
+    $("upper").setAttribute("d", band(k, 0, top));
+    $("lower").setAttribute("d", band(k, bot, 0));
+    $("upper").setAttribute("fill", k >= 0 ? "var(--red)" : "var(--blue)");
+    $("lower").setAttribute("fill", k >= 0 ? "var(--blue)" : "var(--red)");
+    $("upper").setAttribute("fill-opacity", (0.18 + 0.72 * mag).toFixed(2));
+    $("lower").setAttribute("fill-opacity", (0.18 + 0.72 * mag).toFixed(2));
+    $("neutral").setAttribute("d", P2(arcPts(k, 0, 60)));
+    const sk = arcPts(k, bot - 2, 60), sk2 = arcPts(k, bot - 70, 60).reverse();
+    $("skin").setAttribute("d", P2(sk) + " " + P2(sk2).replace("M", "L") + " Z");
+    const ch = arcPts(k, top + 3, 60).slice(26, 35);
+    $("chan").setAttribute("d", P2(ch));
+    const mid = arcPts(k, top + 14, 2)[1];
+    $("chanLbl").setAttribute("x", mid[0].toFixed(1)); $("chanLbl").setAttribute("y", mid[1].toFixed(1));
+    $("svgR").textContent = Math.abs(k) < 0.05 ? "flat" : `R = ${(1000 / Math.abs(k)).toFixed(0)} mm` + (k < 0 ? " (bent inward)" : "");
+  }
+
+  // ---------------- readouts ----------------
+  function setRead(el, stEl, v, C0){
+    if (!isFinite(v)){ el.textContent = "over range"; if (stEl){ stEl.className = "state bad"; stEl.textContent = "saturated: reads above the top of the sensor range"; } return; }
+    el.textContent = fmt(v, 1);
+    const err = v - C0, rel = Math.abs(err) / C0;
+    if (stEl){
+      stEl.className = "state " + (rel < 0.05 ? "ok" : rel < 0.3 ? "warn" : "bad");
+      stEl.textContent = rel < 0.05 ? "accurate (within 5 %)" : (err > 0 ? "reads high by " : "reads low by ") + fmt(Math.abs(err), 1) + " ng/mL";
+    }
+  }
+
+  function update(){
+    const r = compute(st.k);
+    drawStrip(st.k, r.e);
+    $("kap").value = st.k; $("kapV").textContent = fmt(st.k, 1) + " 1/m";
+    $("c0V").textContent = st.C0 + " ng/mL"; $("trueV").textContent = fmt(st.C0, 1);
+    $("vovV").textContent = st.V.toFixed(2) + " V";
+    $("epsV").textContent = sgn(r.e * 100, 4) + " %";
+    $("diV").textContent = sgn(r.dI * 100, 2) + " %";
+    $("fsV").textContent = sgn(r.dI / r.FS * 100, 1) + " %";
+    $("sigV").textContent = fmt(r.Rtrue * 100, 2) + " %";
+    $("epkV").textContent = fmt(r.epk * 1e6, 3) + " µm";
+    $("epkV").title = "paper (analytic): " + fmt(r.py * 1e6, 3) + " µm";
+    setRead($("readV"), $("readS"), r.read, st.C0);
+    $("errV").textContent = isFinite(r.read) ? sgn(r.read - st.C0, 1) + " ng/mL" : "over range";
+    $("twinBox").hidden = !st.twin;
+    if (st.twin){ setRead($("twinV"), null, r.twin, st.C0); $("twinS").textContent = isFinite(r.twin) ? "ng/mL, error " + sgn(r.twin - st.C0, 2) : "ng/mL"; }
+    document.querySelectorAll(".chip").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.m === st.motion)));
+    return r;
+  }
+
+  // ---------------- motion playback + chart ----------------
+  const hist = [];
+  function motionK(name, t){
+    const m = MOTIONS[name]; if (!m || m.k === 0) return 0;
+    const k = 1 / m.R;
+    if (m.kind === "flex") return k * 0.5 * (1 - Math.cos(2 * Math.PI * m.f * t));
+    if (m.kind === "osc") return k * Math.sin(2 * Math.PI * m.f * t);
+    return k;
+  }
+  const canvas = $("chart"), ctx = canvas.getContext("2d");
+  function css(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+  function drawChart(){
+    const dpr = window.devicePixelRatio || 1, w = canvas.clientWidth, h = canvas.clientHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    const padL = 44, padB = 22, padT = 10, win = 10;
+    const ymax = Math.max(60, st.C0 * 2.5);
+    ctx.font = "11px " + css("--mono"); ctx.fillStyle = css("--muted"); ctx.strokeStyle = css("--line"); ctx.lineWidth = 1;
+    for (let i = 0; i <= 4; i++){
+      const v = ymax * i / 4, y = padT + (h - padT - padB) * (1 - i / 4);
+      ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(w - 8, y); ctx.stroke();
+      ctx.fillText(v.toFixed(0), 6, y + 4);
+    }
+    ctx.fillText("ng/mL", 6, h - 6);
+    const t1 = hist.length ? hist[hist.length - 1].t : 0, t0 = t1 - win;
+    const X = t => padL + (w - padL - 8) * (t - t0) / win;
+    const Y = v => padT + (h - padT - padB) * (1 - Math.min(v, ymax) / ymax);
+    function line(key, color, width){
+      ctx.strokeStyle = color; ctx.lineWidth = width; ctx.beginPath(); let started = false;
+      for (const p of hist){ if (p.t < t0) continue; const v = isFinite(p[key]) ? p[key] : ymax; const x = X(p.t), y = Y(v); if (!started){ ctx.moveTo(x, y); started = true; } else ctx.lineTo(x, y); }
+      ctx.stroke();
+    }
+    if (!hist.length){ ctx.fillStyle = css("--muted"); ctx.font = "13px " + css("--sans"); ctx.fillText("Press Play motion to record 10 seconds of readings.", padL + 12, h / 2); return; }
+    line("C0", css("--teal"), 2); if (st.twin) line("twin", css("--blue"), 1.6); line("read", css("--red"), 1.6);
+  }
+  let last = null, raf = null;
+  function tick(ts){
+    if (!st.playing){ raf = null; last = null; return; }
+    if (last !== null) st.t += Math.min(0.05, (ts - last) / 1000);
+    last = ts;
+    st.k = motionK(st.motion, st.t);
+    const r = update();
+    hist.push({t: st.t, C0: st.C0, read: r.read, twin: r.twin});
+    while (hist.length && hist[0].t < st.t - 10.5) hist.shift();
+    drawChart();
+    raf = requestAnimationFrame(tick);
+  }
+  function setPlaying(p){
+    st.playing = p && st.motion !== "flat";
+    $("play").setAttribute("aria-pressed", String(st.playing));
+    $("play").textContent = st.playing ? "Pause" : "Play motion";
+    if (st.playing && !raf) raf = requestAnimationFrame(tick);
+  }
+
+  // ---------------- controls ----------------
+  document.querySelectorAll(".chip").forEach(b => b.addEventListener("click", () => {
+    st.motion = b.dataset.m; st.t = 0; hist.length = 0;
+    const m = MOTIONS[st.motion];
+    st.k = m.k === 0 ? 0 : (m.kind === "osc" ? 1 / m.R : 1 / m.R);   // show the peak until played
+    update(); drawChart();
+    if (st.playing) setPlaying(true);
+  }));
+  $("play").addEventListener("click", () => setPlaying(!st.playing));
+  $("kap").addEventListener("input", e => { setPlaying(false); st.motion = null; st.k = Number(e.target.value); update(); });
+  $("design").addEventListener("change", e => { st.design = Number(e.target.value); update(); drawChart(); });
+  $("c0").addEventListener("input", e => { st.C0 = Number(e.target.value); update(); drawChart(); });
+  $("vov").addEventListener("input", e => { st.V = Number(e.target.value); update(); });
+  $("twin").addEventListener("change", e => { st.twin = e.target.checked; update(); drawChart(); });
+
+  // drag on the patch to bend it
+  const svg = $("strip"); let drag = null;
+  svg.addEventListener("pointerdown", e => { setPlaying(false); st.motion = null; drag = {y: e.clientY, k: st.k}; svg.setPointerCapture(e.pointerId); });
+  svg.addEventListener("pointermove", e => {
+    if (!drag) return;
+    const scale = 600 / svg.getBoundingClientRect().width;
+    st.k = Math.max(-15, Math.min(50, drag.k - (e.clientY - drag.y) * scale * 0.25));
+    update();
+  });
+  const end = () => { drag = null; };
+  svg.addEventListener("pointerup", end); svg.addEventListener("pointercancel", end);
+  window.addEventListener("resize", drawChart);
+
+  // opening state: elbow flexion at its peak, baseline design
+  st.k = 1 / MOTIONS.elbow.R;
+  update(); drawChart();
+})();
+</script>
