@@ -1,0 +1,33 @@
+##### Baseline stack: 25 um PI / 50 nm Au / 0.65 nm MoS2 / 5 nm Al2O3: ElmerGrid structured mesh (bodies bottom->top: PI, Au, MoS2, Al2O3) #####
+Version = 210903
+Coordinate System = Cartesian 2D
+Subcell Divisions in 2D = 2 4
+Subcell Limits 1 = 0.0 5e-06 0.0002
+Subcell Limits 2 = 0.0 2.5e-05 2.5050000000000002e-05 2.5050650000000004e-05 2.5055650000000005e-05
+Material Structure in 2D
+  4 4
+  3 3
+  2 2
+  1 1
+End
+Materials Interval = 1 4
+Boundary Definitions
+# type out int
+  1 -1 1 1
+  2 -2 1 1
+  2 -2 2 1
+  2 -2 3 1
+  2 -2 4 1
+  3 -3 4 1
+  4 -4 1 1
+  4 -4 2 1
+  4 -4 3 1
+  4 -4 4 1
+End
+Numbering = Horizontal
+Element Degree = 2
+Element Innernodes = False
+Triangles = False
+Coordinate Ratios = 1
+Element Divisions 1 = 85 3315
+Element Divisions 2 = 8 1 1 1

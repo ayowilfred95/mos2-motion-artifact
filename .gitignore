@@ -4,3 +4,8 @@ __pycache__/
 figures/*.png
 comsol/*.mph.lock
 .DS_Store
+elmer/scratch/
+elmer/models/*/results/
+elmer/models/*/*/mesh.*
+elmer/models/*/*.log
+elmer/models/*/case_eq.sif

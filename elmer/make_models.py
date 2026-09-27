@@ -1,0 +1,196 @@
+"""
+Write the Elmer models (ElmerGrid .grd mesh definition + ElmerSolver .sif case file).
+
+Each model is a 2D plane-strain slice of the bent strip with the real layer stack (all layers meshed,
+one quadratic element through each nanometre film). Pure bending is uniform along the strip, so a
+200 um half-slice with a symmetry plane at the channel centre (x = 0) gives the same state as the full
+10 mm strip, while keeping element aspect ratios below 100 in the 0.65 nm MoS2 layer (longer elements
+make the thin-film equations ill-conditioned). The slice is bent by a pure moment: a linear, force-free
+traction on its end face. The neutral plane and the curvature are outcomes of the solve.
+
+Usage: python elmer/make_models.py            (writes elmer/models/<name>/)
+Parameter values come from motion_artifact_sim.PARAMS and comsol/params.py (Poisson ratios).
+"""
+import os
+import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)
+sys.path[:0] = [ROOT, os.path.join(ROOT, "comsol")]
+from motion_artifact_sim import PARAMS as P      # noqa: E402
+from params import EXTRA                          # noqa: E402
+
+L = EXTRA["L_strip"][0]          # 10 mm
+LF = EXTRA["L_flake"][0]         # 10 um channel
+R_WRIST = 25e-3                  # load chosen to give roughly the wrist curvature
+
+
+def nu(k):
+    return EXTRA[k][0]
+
+
+MAT = {  # name: (E [Pa], nu, density)
+    "PI": (P["E_PI"], nu("nu_PI"), 1420), "PET": (P["E_PET"], nu("nu_PET"), 1380),
+    "PMMA": (P["E_PMMA"], nu("nu_PMMA"), 1180), "Au": (P["E_Au"], nu("nu_Au"), 19300),
+    "MoS2": (P["E_MoS2"], nu("nu_MoS2"), 5060), "Al2O3": (P["E_Al2O3"], nu("nu_Al2O3"), 3950),
+}
+
+
+L_SEG = 200e-6                   # half-slice length: x = 0 (channel centre, symmetry plane) ... 200 um
+NX_SEG = 3400                    # ~59 nm elements: aspect ratio < 100 even in the 0.65 nm MoS2 layer
+
+
+def x_cells():
+    """Subcell limits (m) and element counts along the slice (uniform, fine enough for the MoS2 layer)."""
+    return [0.0, LF / 2, L_SEG], [int(NX_SEG * LF / 2 / L_SEG), NX_SEG - int(NX_SEG * LF / 2 / L_SEG)]
+
+
+def model(name, layers, title):
+    """layers: bottom -> top list of (material, thickness [m], elements through thickness)."""
+    d = os.path.join(HERE, "models", name)
+    os.makedirs(d, exist_ok=True)
+    xl, xn = x_cells()
+    y = [0.0]
+    for _, t, _ in layers:
+        y.append(y[-1] + t)
+    nx, ny = len(xn), len(layers)
+    rows = []
+    for i in reversed(range(ny)):                     # ElmerGrid lists the top row first
+        rows.append("  " + " ".join(str(i + 1) for _ in range(nx)))
+    bnd = ["  1 -1 1 1"]                              # 1 = bottom
+    bnd += [f"  2 -2 {i + 1} 1" for i in range(ny)]  # 2 = right end (all layers)
+    bnd += [f"  3 -3 {ny} 1"]                         # 3 = top
+    bnd += [f"  4 -4 {i + 1} 1" for i in range(ny)]  # 4 = x = 0, symmetry plane (all layers)
+    grd = f"""##### {title}: ElmerGrid structured mesh (bodies bottom->top: {', '.join(m for m, _, _ in layers)}) #####
+Version = 210903
+Coordinate System = Cartesian 2D
+Subcell Divisions in 2D = {nx} {ny}
+Subcell Limits 1 = {' '.join(repr(v) for v in xl)}
+Subcell Limits 2 = {' '.join(repr(v) for v in y)}
+Material Structure in 2D
+{chr(10).join(rows)}
+End
+Materials Interval = 1 {ny}
+Boundary Definitions
+# type out int
+{chr(10).join(bnd)}
+End
+Numbering = Horizontal
+Element Degree = 2
+Element Innernodes = False
+Triangles = False
+Coordinate Ratios = 1
+Element Divisions 1 = {' '.join(str(n) for n in xn)}
+Element Divisions 2 = {' '.join(str(n) for _, _, n in layers)}
+"""
+    open(os.path.join(d, f"{name}.grd"), "w").write(grd)
+
+    # pure moment: traction s*(y - ym) on the right end, the opposite on the left; zero net force
+    H = y[-1]
+    ym = H / 2
+    # plane-strain laminate bending stiffness D about its neutral plane -> moment M = D/R_WRIST
+    Ep = [MAT[m][0] / (1 - MAT[m][1] ** 2) for m, _, _ in layers]
+    zc = [0.5 * (a + b) for a, b in zip(y[:-1], y[1:])]
+    ts = [t for _, t, _ in layers]
+    zn = sum(e * t * z for e, t, z in zip(Ep, ts, zc)) / sum(e * t for e, t in zip(Ep, ts))
+    D = sum(e * (t ** 3 / 12 + t * (z - zn) ** 2) for e, t, z in zip(Ep, ts, zc))
+    s = 12 * D / R_WRIST / H ** 3                # traction s*(y - ym) carries the moment s*H^3/12
+    bodies = "\n".join(f"""Body {i + 1}
+  Name = "{m}"
+  Target Bodies(1) = {i + 1}
+  Equation = 1
+  Material = {i + 1}
+End
+""" for i, (m, _, _) in enumerate(layers))
+    mats = "\n".join(f"""Material {i + 1}
+  Name = "{m}"
+  Youngs Modulus = {MAT[m][0]!r}
+  Poisson Ratio = {MAT[m][1]!r}
+  Density = {MAT[m][2]}
+End
+""" for i, (m, _, _) in enumerate(layers))
+    ych = y[2] + layers[2][1] / 2 if len(layers) > 2 else H      # MoS2 mid-plane (3rd layer in the stack)
+    sif = f"""! {title}
+! 2D plane strain, linear elasticity, pure bending by a force-free linear end traction.
+! Generated by elmer/make_models.py - edit there, not here.
+Header
+  CHECK KEYWORDS Warn
+  Mesh DB "." "{name}"
+  Results Directory "results"
+End
+
+Simulation
+  Max Output Level = 5
+  Coordinate System = Cartesian 2D
+  Simulation Type = Steady state
+  Steady State Max Iterations = 1
+  Output Intervals(1) = 1
+End
+
+Constants
+End
+
+{bodies}
+Equation 1
+  Name = "Linear elasticity (plane strain)"
+  Active Solvers(3) = 1 2 3
+End
+
+Solver 1
+  Equation = Linear elasticity
+  Procedure = "StressSolve" "StressSolver"
+  Variable = -dofs 2 Displacement
+  Plane Stress = False
+  Displace Mesh = False
+  Calculate Strains = True
+  Calculate Stresses = True
+  Linear System Solver = Direct
+  Linear System Direct Method = Umfpack
+End
+
+Solver 2
+  Equation = SaveLine
+  Procedure = "SaveData" "SaveLine"
+  Filename = "lines.dat"
+  Polyline Coordinates(4,2) = Real 1.0e-9 0.0  1.0e-9 {H!r}  50.0e-6 0.0  50.0e-6 {H!r}
+  Polyline Divisions(2) = 2000 2000
+End
+
+Solver 3
+  Equation = ResultOutput
+  Procedure = "ResultOutputSolve" "ResultOutputSolver"
+  Output File Name = "{name}"
+  Vtu Format = True
+End
+
+{mats}
+! moment load: traction = s*(y - y_mid), s = {s:.6e} Pa/m, y_mid = {ym!r} m
+Boundary Condition 1
+  Name = "right end: moment"
+  Target Boundaries(1) = 2
+  Force 1 = Variable Coordinate 2
+    Real MATC "{s!r}*(tx-{ym!r})"
+End
+
+Boundary Condition 2
+  Name = "x = 0: symmetry plane (channel centre)"
+  Target Boundaries(1) = 4
+  Displacement 1 = 0.0
+End
+
+Boundary Condition 3
+  Name = "pin at x=0, bottom (no vertical rigid motion)"
+  Target Coordinates(1,2) = 0.0 0.0
+  Displacement 2 = 0.0
+End
+"""
+    open(os.path.join(d, "case.sif"), "w").write(sif)
+    open(os.path.join(d, "ELMERSOLVER_STARTINFO"), "w").write("case.sif\n1\n")
+    return d, dict(y=y, H=H, y_mos2=ych)
+
+
+LAYERS_BASE = [("PI", 25e-6, 8), ("Au", P["t_Au"], 1), ("MoS2", P["t_MoS2"], 1), ("Al2O3", P["t_Al2O3"], 1)]
+
+if __name__ == "__main__":
+    d, info = model("baseline", LAYERS_BASE, "Baseline stack: 25 um PI / 50 nm Au / 0.65 nm MoS2 / 5 nm Al2O3")
+    print("wrote", d, info)
