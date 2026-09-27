@@ -200,7 +200,7 @@ if __name__ == "__main__":
 
 # ---------------------------------------------------------------- rigid island (full-length strip)
 def model_island(name="rigid_island", title="Rigid island: 3 mm x 20 um island (70 GPa) in 100 um PDMS under 25 um PI",
-                 scale=1):
+                 scale=1, t_pdms=None):
     """
     Half strip x = 0 (channel centre, symmetry) ... 5 mm, bent by a pure end moment. Layers bottom -> top:
     PDMS carrier (-100 ... -20 um), island row (-20 ... 0 um: island for x < 1.5 mm, PDMS beyond), PI 25 um.
@@ -210,11 +210,13 @@ def model_island(name="rigid_island", title="Rigid island: 3 mm x 20 um island (
     """
     d = os.path.join(HERE, "models", name)
     os.makedirs(d, exist_ok=True)
-    tp, ti, ts, w = EXTRA["t_PDMS"][0], EXTRA["t_isl"][0], 25e-6, EXTRA["w_isl"][0] / 2
+    tp = EXTRA["t_PDMS"][0] if t_pdms is None else t_pdms
+    ti, ts, w = EXTRA["t_isl"][0], 25e-6, EXTRA["w_isl"][0] / 2
     xl = [0.0, LF / 2, w - 100e-6, w, w + 100e-6, L / 2]
     xn = [int(n * scale) for n in (5, 140, 50, 50, 170)]
     yl = [-tp, -ti, 0.0, ts]
-    yn = [int(n * scale) for n in (10, 6, 8)]
+    n_pdms = max(4, int(round((tp - ti) / 8e-6)))           # ~8 um elements in the PDMS below the island
+    yn = [int(n * scale) for n in (n_pdms, 6, 8)]
     # bodies: 1 PDMS (carrier), 2 island, 3 PI, 4 PDMS beside the island (same material as 1).
     # Body 4 is separate so that ElmerGrid's side codes (-2 = +x side, -4 = -x side of a body's cells) only
     # pick the outer end faces; with a single PDMS body, "-x side of PDMS" would also catch the PDMS face

@@ -29,6 +29,7 @@ DATA = os.path.join(HERE, "data")
 RT = {}
 H_M = mm.T_AU + mm.T_M / 2                                # MoS2 mid-plane height above the substrate surface
 ETA = {"spring": mm.P["eta_thinALD"], "tied": mm.P["eta_polymer"]}
+EXTRA_T_ISL = mm.EXTRA["t_isl"][0]
 
 
 def log(*a):
@@ -104,11 +105,22 @@ def island_result(d, info):
                 k_unsupported=float(np.median(k[(xb > 2.5e-3) & far])))
 
 
-def run_island(scale=1):
-    d, info = mm.model_island(scale=scale)
-    RT["elmer_rigid_island"] = RT.get("elmer_rigid_island", 0) + elmer(d, "rigid_island")
+def run_island(scale=1, t_pdms=None, name="rigid_island"):
+    title = None if t_pdms is None else (f"Rigid island: 3 mm x 20 um island (70 GPa) in {t_pdms*1e6:g} um PDMS "
+                                         "under 25 um PI")
+    kw = dict(name=name, scale=scale, t_pdms=t_pdms)
+    if title:
+        kw["title"] = title
+    d, info = mm.model_island(**kw)
+    RT[f"elmer_{name}"] = RT.get(f"elmer_{name}", 0) + elmer(d, name)
     r = island_result(d, info)
-    r["nodes"], r["elements"] = mesh_size(d, "rigid_island")
+    r["nodes"], r["elements"] = mesh_size(d, name)
+    # neutral plane under the channel (fit of the through-thickness strain in the island + PI)
+    a = np.loadtxt(os.path.join(d, "results", "lines.dat"))
+    thick = np.isclose(a[:, 3], 1e-9, atol=1e-12) & (a[:, 4] >= -EXTRA_T_ISL) & (a[:, 4] <= info["t_sub"])
+    k, c = np.polyfit(a[thick, 4], a[thick, 13], 1)
+    r["zn_local_um"] = -c / k * 1e6                      # measured from the PI bottom (island top); negative = inside island
+    r["channel_offset_um"] = (info["t_sub"] + H_M) * 1e6 - r["zn_local_um"]
     return r
 
 
