@@ -9,7 +9,10 @@ import glob
 import os
 from paraview.simple import *  # noqa: F401,F403
 
-WARP = 20.0                      # visual exaggeration of the displacement
+WARP = float(os.environ.get("WARP", "20"))        # visual exaggeration of the displacement
+YSCALE = float(os.environ.get("YSCALE", "1"))     # stretch of the thickness direction (display only)
+LIM = float(os.environ.get("LIM", "0.06"))        # colour range +-LIM (%)
+TITLE = os.environ.get("TITLE", "Baseline sensor stack bent to wrist curvature (R = 25 mm)")
 
 f = sorted(glob.glob(os.path.join("results", "*_t0001.vtu")))[0]
 src = XMLUnstructuredGridReader(registrationName=os.path.basename(f), FileName=[f])
@@ -25,7 +28,7 @@ disp = Show(warp, view)
 ColorBy(disp, ("POINTS", "axial strain (%)"))
 lut = GetColorTransferFunction("axialstrain")
 lut.ApplyPreset("Cool to Warm", True)
-lim = 0.06                                   # symmetric colour range (%), white = zero strain
+lim = LIM                                    # symmetric colour range (%), white = zero strain
 lut.RescaleTransferFunction(-lim, lim)
 GetOpacityTransferFunction("axialstrain").RescaleTransferFunction(-lim, lim)
 line = Contour(registrationName="neutral plane (strain = 0)", Input=warp)
@@ -42,11 +45,14 @@ bar.Visibility = 1
 view.InteractionMode = "2D"
 view.OrientationAxesVisibility = 0
 text = Text(registrationName="title")
-text.Text = ("Baseline sensor stack bent to wrist curvature (R = 25 mm)\n"
-             "red = stretched, blue = compressed, black line = neutral plane (zero strain); shape exaggerated x%g" % WARP)
+extra = f", thickness stretched x{YSCALE:g}" if YSCALE != 1 else ""
+text.Text = (TITLE + "\nred = stretched, blue = compressed, black line = neutral plane (zero strain); "
+             f"bend exaggerated x{WARP:g}{extra}")
 tdisp = Show(text, view)
 tdisp.WindowLocation = "Upper Center"
 tdisp.FontSize = 14
+for dsp in (disp, ldisp):
+    dsp.Scale = [1.0, YSCALE, 1.0]
 Hide(src, view)
 Hide(calc, view)
 ResetCamera(view)
