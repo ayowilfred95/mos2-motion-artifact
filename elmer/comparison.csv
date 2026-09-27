@@ -1,0 +1,215 @@
+quantity,comsol,python,percent_difference,note
+art_walking_pct,0.27881559770996933,0.2803026450875379,-0.531,
+eps_walking_pct,0.003081629701382745,0.0030980604512369407,-0.530,
+art_elbow_pct,2.0951056523710543,2.106300565926622,-0.531,
+eps_elbow_pct,0.023112222760370588,0.02323545338427705,-0.530,
+art_wrist_pct,3.356431646950009,3.3743876167874776,-0.532,
+eps_wrist_pct,0.03697955641659294,0.037176725414843285,-0.530,
+dyn_baseline.C_raw.rest.rms,0.0,0.0,0,
+dyn_baseline.C_raw.rest.max,0.0,0.0,0,
+dyn_baseline.C_raw.walking.rms,13.361024301046472,13.440119521649414,-0.589,
+dyn_baseline.C_raw.walking.max,35.63767939656975,35.88825870459982,-0.698,
+dyn_baseline.C_raw.wrist.rms,inf,inf,,both saturated
+dyn_baseline.C_raw.wrist.max,inf,inf,,both saturated
+dyn_baseline.C_raw.hold.rms,inf,inf,,both saturated
+dyn_baseline.C_raw.hold.max,inf,inf,,both saturated
+dyn_baseline.C_raw.elbow.rms,inf,inf,,both saturated
+dyn_baseline.C_raw.elbow.max,inf,inf,,both saturated
+dyn_baseline.C_raw.rest2.rms,0.0,0.0,0,
+dyn_baseline.C_raw.rest2.max,0.0,0.0,0,
+dyn_baseline.C_filt.rest.rms,0.21764108531555604,0.217646268446296,-0.002,
+dyn_baseline.C_filt.rest.max,1.5805262547488894,1.5805585572729157,-0.002,
+dyn_baseline.C_filt.walking.rms,32.33066426542321,32.7966082885853,-1.421,
+dyn_baseline.C_filt.walking.max,293.1702347005872,298.8821401089442,-1.911,
+dyn_baseline.C_filt.wrist.rms,inf,inf,,both saturated
+dyn_baseline.C_filt.wrist.max,inf,inf,,both saturated
+dyn_baseline.C_filt.hold.rms,inf,inf,,both saturated
+dyn_baseline.C_filt.hold.max,inf,inf,,both saturated
+dyn_baseline.C_filt.elbow.rms,inf,inf,,both saturated
+dyn_baseline.C_filt.elbow.max,inf,inf,,both saturated
+dyn_baseline.C_filt.rest2.rms,14.640075013333822,14.766222854149428,-0.854,
+dyn_baseline.C_filt.rest2.max,105.92669461709397,107.00476256537641,-1.007,
+dyn_baseline.C_twin.rest.rms,0.0,0.0,0,
+dyn_baseline.C_twin.rest.max,0.0,0.0,0,
+dyn_baseline.C_twin.walking.rms,0.10849381131687126,0.10907228493304451,-0.530,
+dyn_baseline.C_twin.walking.max,0.2659223526756449,0.2673389234348491,-0.530,
+dyn_baseline.C_twin.wrist.rms,2.199136002381461,2.211003687982111,-0.537,
+dyn_baseline.C_twin.wrist.max,3.7134292307464847,3.733534461861325,-0.539,
+dyn_baseline.C_twin.hold.rms,3.093269201341314,3.1099727701301,-0.537,
+dyn_baseline.C_twin.hold.max,3.09527018364183,3.1119847930063713,-0.537,
+dyn_baseline.C_twin.elbow.rms,1.414968176332088,1.4225718119945308,-0.534,
+dyn_baseline.C_twin.elbow.max,2.3142569269577393,2.3267129698310214,-0.535,
+dyn_baseline.C_twin.rest2.rms,0.0,0.0,0,
+dyn_baseline.C_twin.rest2.max,0.0,0.0,0,
+dyn_baseline.C_twin_filt.rest.rms,0.2166874607576703,0.21668737809370628,0.000,
+dyn_baseline.C_twin_filt.rest.max,1.5745956131033552,1.5745950874606258,0.000,
+dyn_baseline.C_twin_filt.walking.rms,0.32820494957903446,0.3284920390502193,-0.087,
+dyn_baseline.C_twin_filt.walking.max,1.567297305557613,1.5672967794082737,0.000,
+dyn_baseline.C_twin_filt.wrist.rms,1.786807942138378,1.7963556187089889,-0.532,
+dyn_baseline.C_twin_filt.wrist.max,2.4584809296154333,2.471692452544815,-0.535,
+dyn_baseline.C_twin_filt.hold.rms,3.0385654735026346,3.054968735071296,-0.537,
+dyn_baseline.C_twin_filt.hold.max,3.1614158888213666,3.1784958049679233,-0.537,
+dyn_baseline.C_twin_filt.elbow.rms,1.1783288390846358,1.1846264992875024,-0.532,
+dyn_baseline.C_twin_filt.elbow.max,2.1124040554887813,2.123735845048799,-0.534,
+dyn_baseline.C_twin_filt.rest2.rms,0.09587861360674012,0.09638771017954238,-0.528,
+dyn_baseline.C_twin_filt.rest2.max,0.5716344239157394,0.5746739335087057,-0.529,
+dyn_thin.C_raw.rest.rms,0.0,0.0,0,
+dyn_thin.C_raw.rest.max,0.0,0.0,0,
+dyn_thin.C_raw.walking.rms,0.9470733302934284,0.9556993124718834,-0.903,
+dyn_thin.C_raw.walking.max,2.061015891142276,2.080123347485028,-0.919,
+dyn_thin.C_raw.wrist.rms,19.713674156361225,19.936262476525812,-1.116,
+dyn_thin.C_raw.wrist.max,34.405293992855064,34.810959880590374,-1.165,
+dyn_thin.C_raw.hold.rms,27.383783311786132,27.69156498726079,-1.111,
+dyn_thin.C_raw.hold.max,27.39669760264387,27.704639743606236,-1.112,
+dyn_thin.C_raw.elbow.rms,11.589878276573225,11.709907953956249,-1.025,
+dyn_thin.C_raw.elbow.max,19.420943510122882,19.627134104309704,-1.051,
+dyn_thin.C_raw.rest2.rms,0.0,0.0,0,
+dyn_thin.C_raw.rest2.max,0.0,0.0,0,
+dyn_thin.C_filt.rest.rms,0.21676946246594214,0.21677008334141382,-0.000,
+dyn_thin.C_filt.rest.max,1.5751054986314692,1.57510935115792,-0.000,
+dyn_thin.C_filt.walking.rms,1.0957343162267783,1.105327674099931,-0.868,
+dyn_thin.C_filt.walking.max,6.438714538953306,6.500616178763906,-0.952,
+dyn_thin.C_filt.wrist.rms,14.746796279846828,14.898465560225857,-1.018,
+dyn_thin.C_filt.wrist.max,20.908283116776587,21.132729581839016,-1.062,
+dyn_thin.C_filt.hold.rms,26.83276031802418,27.133566161288282,-1.109,
+dyn_thin.C_filt.hold.max,28.105755627376936,28.42322576146296,-1.117,
+dyn_thin.C_filt.elbow.rms,9.254535579900482,9.345825752099492,-0.977,
+dyn_thin.C_filt.elbow.max,17.545491023745868,17.729209009937094,-1.036,
+dyn_thin.C_filt.rest2.rms,0.718442872146886,0.7251550125938581,-0.926,
+dyn_thin.C_filt.rest2.max,4.322089412791129,4.362890234814273,-0.935,
+dyn_thin.C_twin.rest.rms,0.0,0.0,0,
+dyn_thin.C_twin.rest.max,0.0,0.0,0,
+dyn_thin.C_twin.walking.rms,0.008111929911772503,0.008185770559160541,-0.902,
+dyn_thin.C_twin.walking.max,0.01989929856800643,0.020080423985533002,-0.902,
+dyn_thin.C_twin.wrist.rms,0.16265112884219923,0.16413297163882112,-0.903,
+dyn_thin.C_twin.wrist.max,0.27384546127001386,0.27634092054381654,-0.903,
+dyn_thin.C_twin.hold.rms,0.22864253274511273,0.23072570051885008,-0.903,
+dyn_thin.C_twin.hold.max,0.2287874670807497,0.23087195753697642,-0.903,
+dyn_thin.C_twin.elbow.rms,0.10504607205827263,0.10600282233749528,-0.903,
+dyn_thin.C_twin.elbow.max,0.17156105983636394,0.17312380108717207,-0.903,
+dyn_thin.C_twin.rest2.rms,0.0,0.0,0,
+dyn_thin.C_twin.rest2.max,0.0,0.0,0,
+dyn_thin.C_twin_filt.rest.rms,0.21670049640958775,0.21670048778121076,0.000,
+dyn_thin.C_twin_filt.rest.max,1.5746776454257017,1.5746775918162292,0.000,
+dyn_thin.C_twin_filt.walking.rms,0.2997081437038491,0.29971177386591324,-0.001,
+dyn_thin.C_twin_filt.walking.max,1.5673794008765647,1.5673793472391644,0.000,
+dyn_thin.C_twin_filt.wrist.rms,0.1352256731769453,0.13643684781440518,-0.888,
+dyn_thin.C_twin_filt.wrist.max,0.18270486008155729,0.1843670860574207,-0.902,
+dyn_thin.C_twin_filt.hold.rms,0.22470341304835093,0.22675019921213715,-0.903,
+dyn_thin.C_twin_filt.hold.max,0.233581498935294,0.23570966951743344,-0.903,
+dyn_thin.C_twin_filt.elbow.rms,0.08791830757605827,0.0887187240971238,-0.902,
+dyn_thin.C_twin_filt.elbow.max,0.15709217052960867,0.1585227097904891,-0.902,
+dyn_thin.C_twin_filt.rest2.rms,0.007196707559894488,0.0072621958387184046,-0.902,
+dyn_thin.C_twin_filt.rest2.max,0.04285204549825039,0.04324202989178616,-0.902,
+dyn_island.C_raw.rest.rms,0.0,0.0,0,
+dyn_island.C_raw.rest.max,0.0,0.0,0,
+dyn_island.C_raw.walking.rms,2.8992504698513466,0.5347341929684364,442.185,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_raw.walking.max,6.5398566391805275,1.1547119097412235,466.363,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_raw.wrist.rms,124.54908442710006,10.096674076815342,1133.565,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_raw.wrist.max,262.2978085733316,17.23950261678739,1421.493,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_raw.hold.rms,159.8248949598923,14.045199357356038,1037.933,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_raw.hold.max,159.9382961981005,14.05148648821384,1038.230,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_raw.elbow.rms,49.667816581714824,6.180125055178868,703.670,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_raw.elbow.max,89.59685372336806,10.234302741621917,775.456,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_raw.rest2.rms,0.0,0.0,0,
+dyn_island.C_raw.rest2.max,0.0,0.0,0,
+dyn_island.C_filt.rest.rms,0.21691030576449588,0.21673980821251937,0.079,
+dyn_island.C_filt.rest.max,1.5759797774287279,1.5749215093035076,0.067,
+dyn_island.C_filt.walking.rms,3.5246734397795434,0.6579025317004134,435.744,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_filt.walking.max,22.253184818998562,3.552012752952706,526.495,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_filt.wrist.rms,61.33843688207558,7.887462340510215,677.670,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_filt.wrist.max,100.44870682137277,10.961172511360203,816.405,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_filt.hold.rms,155.18264560549204,13.780393444770636,1026.112,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_filt.hold.max,168.04268440663296,14.380993248445208,1068.505,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_filt.elbow.rms,34.1853010513377,5.044844438695153,577.628,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_filt.elbow.max,77.1514535387211,9.30588504610715,729.061,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_filt.rest2.rms,2.319448279506813,0.40117309082271113,478.166,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_filt.rest2.max,14.275309103789894,2.402411157665867,494.208,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_twin.rest.rms,0.0,0.0,0,
+dyn_island.C_twin.rest.max,0.0,0.0,0,
+dyn_island.C_twin.walking.rms,0.024772444858207978,0.004581029501984019,440.762,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_twin.walking.max,0.06076060073996814,0.01123801136907332,440.670,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_twin.wrist.rms,0.49758381154842446,0.09181948600890899,441.915,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_twin.wrist.max,0.8381456703326791,0.15457535571194114,442.225,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_twin.hold.rms,0.6995378028521927,0.1290699723510082,441.983,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_twin.hold.max,0.6999827285541755,0.12915173023375814,441.985,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_twin.elbow.rms,0.3211660954783531,0.05930782567361736,441.524,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_twin.elbow.max,0.5246504341011473,0.09685666908566759,441.677,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_twin.rest2.rms,0.0,0.0,0,
+dyn_island.C_twin.rest2.max,0.0,0.0,0,
+dyn_island.C_twin_filt.rest.rms,0.216698513197537,0.21670090750169493,-0.001,
+dyn_island.C_twin_filt.rest.max,1.5746652954910871,1.5746801981179601,-0.001,
+dyn_island.C_twin_filt.walking.rms,0.3012154787292298,0.29956649047817824,0.550,
+dyn_island.C_twin_filt.walking.max,1.5673670439123022,1.5673819548835617,-0.001,
+dyn_island.C_twin_filt.wrist.rms,0.40865643411616287,0.07732345977045961,428.503,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_twin_filt.wrist.max,0.5581769662402252,0.10324038755840093,440.658,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_twin_filt.hold.rms,0.6873548517343713,0.12686893830024154,441.783,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_twin_filt.hold.max,0.7146852235878782,0.13185945228167384,442.005,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_twin_filt.elbow.rms,0.26857521150281594,0.049646863444795915,440.971,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_twin_filt.elbow.max,0.480142446658931,0.08869974590504626,441.312,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_twin_filt.rest2.rms,0.02196299987626645,0.004064755884489913,440.328,> 5 %: see COMSOL_METHODS.md
+dyn_island.C_twin_filt.rest2.max,0.13080447388894356,0.024202055341774553,440.468,> 5 %: see COMSOL_METHODS.md
+xtalk_floor_pct_FS,2.307049231104326,2.319350043496087,-0.530,
+"mitigation_pct_FS.Baseline: 25 um PI, 5 nm Al2O3.wrist",43.84181498960684,44.07635642836625,-0.532,
+"mitigation_pct_FS.Baseline: 25 um PI, 5 nm Al2O3.elbow",27.36633545878951,27.512563769255436,-0.531,
+"mitigation_pct_FS.Baseline: 25 um PI, 5 nm Al2O3.walking",3.6418980443486406,3.6613219036330644,-0.531,
+"mitigation_pct_FS.Baseline: 25 um PI, 5 nm Al2O3.eps_wrist_pct",0.03697955641659294,0.037176725414843285,-0.530,
+mitigation_pct_FS.Polymer encapsulation (1 um PMMA).wrist,52.428457656114546,52.68394191115121,-0.485,
+mitigation_pct_FS.Polymer encapsulation (1 um PMMA).elbow,32.71870265992202,32.87792112984557,-0.484,
+mitigation_pct_FS.Polymer encapsulation (1 um PMMA).walking,4.352625211363822,4.373759893847209,-0.483,
+mitigation_pct_FS.Polymer encapsulation (1 um PMMA).eps_wrist_pct,0.04419364437099107,0.04440815470999852,-0.483,
+mitigation_pct_FS.Thinner substrate (12.5 um PI).wrist,20.38564316154809,20.56393413448275,-0.867,
+mitigation_pct_FS.Thinner substrate (12.5 um PI).elbow,12.733215108572029,12.84451199098704,-0.866,
+mitigation_pct_FS.Thinner substrate (12.5 um PI).walking,1.6962324180295765,1.7110453468400744,-0.866,
+mitigation_pct_FS.Thinner substrate (12.5 um PI).eps_wrist_pct,0.01722617726781037,0.017376589488773412,-0.866,
+mitigation_pct_FS.Ultrathin substrate (2.5 um PET).wrist,3.2674991952879187,3.29725041014457,-0.902,
+mitigation_pct_FS.Ultrathin substrate (2.5 um PET).elbow,2.0419807411511215,2.060571487298657,-0.902,
+mitigation_pct_FS.Ultrathin substrate (2.5 um PET).walking,0.27222427066388966,0.2747023091781259,-0.902,
+mitigation_pct_FS.Ultrathin substrate (2.5 um PET).eps_wrist_pct,0.0027649134200574436,0.0027900816611759996,-0.902,
+mitigation_pct_FS.Neutral-plane buried channel + extended gate (1 um tol.).wrist,4.637204211435534,4.833505884719312,-4.061,
+mitigation_pct_FS.Neutral-plane buried channel + extended gate (1 um tol.).elbow,2.89783811799636,3.0204909676055847,-4.061,
+mitigation_pct_FS.Neutral-plane buried channel + extended gate (1 um tol.).walking,0.38629828416665307,0.40264508305085145,-4.060,
+mitigation_pct_FS.Neutral-plane buried channel + extended gate (1 um tol.).eps_wrist_pct,0.003923497412258261,0.004089520632491307,-4.060,
+mitigation_pct_FS.Rigid island (4.2 % strain ratio).wrist,9.98386464451974,1.8450300870008336,441.122,> 5 %: see COMSOL_METHODS.md
+mitigation_pct_FS.Rigid island (4.2 % strain ratio).elbow,6.2380102940717155,1.1530778919770912,440.988,> 5 %: see COMSOL_METHODS.md
+mitigation_pct_FS.Rigid island (4.2 % strain ratio).walking,0.8313648231875972,0.15373100580110588,440.792,> 5 %: see COMSOL_METHODS.md
+mitigation_pct_FS.Rigid island (4.2 % strain ratio).eps_wrist_pct,0.008443572567896893,0.001561422467423418,440.762,> 5 %: see COMSOL_METHODS.md
+mitigation_pct_FS.Prebent channel (1e-3 strain ratio).wrist,0.04368979720716734,0.04392274496902133,-0.530,
+mitigation_pct_FS.Prebent channel (1e-3 strain ratio).elbow,0.027306086189374967,0.027451678144236647,-0.530,
+mitigation_pct_FS.Prebent channel (1e-3 strain ratio).walking,0.003640804353353779,0.0036602165375100113,-0.530,
+mitigation_pct_FS.Prebent channel (1e-3 strain ratio).eps_wrist_pct,3.697955641659294e-05,3.7176725414843284e-05,-0.530,
+gate_opt.Vov,0.05,0.05,0.000,
+gate_opt.ratio,17.04253889155863,17.13689039850987,-0.551,
+gate_opt.ratio_at_0p3,43.84212358562369,44.076666785383104,-0.532,
+gate_opt.ratio_at_0p1,26.445081682599806,26.590100664474615,-0.545,
+zn_um,13.487010383759259,13.432598307861475,0.405,
+eps_per_kappa_um,9.244889104148236,9.29418135371082,-0.530,
+lambda_D_nm,1.359529330319872,1.359529330319872,0.000,
+dVT_sweat_mV,22.96733140094008,22.967331400940076,0.000,
+FS_pct,7.655777133646693,7.655777133646692,0.000,
+R_phys_low_pct,2.3768649473255348,2.3768649473255343,0.000,
+R_phys_high_pct,6.7876564689546335,6.7876564689546335,0.000,
+GF_ch_0p3,38.03517721716275,38.03517721716275,0.000,
+GF_c,212.74949713755223,212.74949713755223,0.000,
+GF_tot_0p3,90.44947319327959,90.44947319327959,0.000,
+K_D_ngml,18.123,18.123,0.000,
+k_on,40000.0,40000.0,0.000,
+tau_100ngml_s,76.71240994556521,76.71240994556521,0.000,
+lin_false_wrist_ngml,56.02267238882658,56.322378005218994,-0.532,
+exact_false_wrist_at30,inf,inf,,both saturated
+exact_false_wrist_at50,inf,inf,,both saturated
+lin_false_elbow_ngml,34.96970292525386,35.156558800932046,-0.531,
+exact_false_elbow_at30,151.71792790806163,155.1418283642447,-2.207,
+exact_false_elbow_at50,inf,inf,,both saturated
+lin_false_walking_ngml,4.65375033082958,4.678570847623328,-0.531,
+exact_false_walking_at30,5.4089386630332745,5.441048262104953,-0.590,
+exact_false_walking_at50,11.47137244011734,11.542920089981012,-0.620,
+lin_false_hold_ngml,46.659425335585595,46.90891077011154,-0.532,
+exact_false_hold_at30,inf,inf,,both saturated
+exact_false_hold_at50,inf,inf,,both saturated
+check_john_sum_meV,202.0,202.0,0.000,
+check_debye_100mM_nm,0.9613324086911873,0.9613324086911873,0.000,
+check_datye_channel_only_0p7_Vov0p145,99.72081440659541,99.72081440659541,0.000,
+GF_ch_0p145,98.82146819683126,98.82146819683126,0.000,
+check_li_29pct,28.9,28.9,0.000,
+check_symmetric_stack_strain,2.240215139749828e-08,2.2380158122826775e-08,0.098,

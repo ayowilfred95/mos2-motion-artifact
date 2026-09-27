@@ -2,8 +2,8 @@
 Figures for the manuscript.
 
   python make_figures.py                  # reference Python model -> figures/ and figures/results.json
-  python make_figures.py --source comsol  # figs 3-8 from comsol/results.json + comsol/data/curves.npz
-                                          # -> comsol/figures/ (figs 1-2 are schematics, Python only)
+  python make_figures.py --source elmer   # figs 3-8 from elmer/data/curves.npz -> elmer/figures/
+                                          # (also: comsol, fem; figs 1-2 are schematics, Python only)
 """
 import argparse
 import numpy as np, json, os
@@ -14,13 +14,13 @@ from matplotlib.patches import FancyBboxPatch, FancyArrowPatch, Rectangle
 from motion_artifact_sim import *
 
 _ap = argparse.ArgumentParser()
-_ap.add_argument("--source", choices=["python", "comsol"], default="python")
+_ap.add_argument("--source", choices=["python", "comsol", "fem", "elmer"], default="python")
 SRC = _ap.parse_args().source
 
 plt.rcParams.update({"font.family": "serif", "font.serif": ["DejaVu Serif", "Times New Roman"],
                      "font.size": 8, "axes.labelsize": 8, "legend.fontsize": 7, "xtick.labelsize": 7,
                      "ytick.labelsize": 7, "axes.linewidth": 0.6, "lines.linewidth": 1.0})
-OUT = "figures" if SRC == "python" else os.path.join("comsol", "figures")
+OUT = "figures" if SRC == "python" else os.path.join(SRC, "figures")
 os.makedirs(OUT, exist_ok=True)
 COL = 3.45; DBL = 7.1
 RES = {}
@@ -193,7 +193,7 @@ def python_curves():
 
 
 def comsol_curves():
-    d = np.load(os.path.join("comsol", "data", "curves.npz"))
+    d = np.load(os.path.join(SRC, "data", "curves.npz"))
     return {k: (d[k].item() if d[k].ndim == 0 else d[k]) for k in d.files}
 
 

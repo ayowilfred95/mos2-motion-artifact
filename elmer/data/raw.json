@@ -1,0 +1,293 @@
+{
+ "mech": {
+  "convergence": [
+   {
+    "level": 1,
+    "n_elem": 11900,
+    "dofs": 78230,
+    "x_elem_nm": 117.64705882352942,
+    "pi_rows": 4,
+    "epk_tied_um": 11.556114800941847,
+    "epk_spring_um": 9.244891840753478,
+    "zn_um": 13.487008686714496,
+    "kappa_fe_over_kappa": 0.9999997963130673,
+    "time_s": 4.080069046999999,
+    "d_spring_pct": -7.34530055086122e-06,
+    "d_tied_pct": -7.34530055086122e-06
+   },
+   {
+    "level": 2,
+    "n_elem": 21600,
+    "dofs": 139238,
+    "x_elem_nm": 83.33333333333334,
+    "pi_rows": 6,
+    "epk_tied_um": 11.556114893173465,
+    "epk_spring_um": 9.244891914538773,
+    "zn_um": 13.487008700342026,
+    "kappa_fe_over_kappa": 0.999999853273867,
+    "time_s": 5.993889655,
+    "d_spring_pct": -6.547181003654813e-06,
+    "d_tied_pct": -6.547181003654813e-06
+   },
+   {
+    "level": 3,
+    "n_elem": 37400,
+    "dofs": 238046,
+    "x_elem_nm": 58.82352941176471,
+    "pi_rows": 8,
+    "epk_tied_um": 11.556111380185293,
+    "epk_spring_um": 9.244889104148236,
+    "zn_um": 13.487010383759259,
+    "kappa_fe_over_kappa": 0.9999999624403113,
+    "time_s": 10.71688337,
+    "d_spring_pct": -3.694656673868325e-05,
+    "d_tied_pct": -3.694656673868325e-05
+   },
+   {
+    "level": 4,
+    "n_elem": 72000,
+    "dofs": 451262,
+    "x_elem_nm": 41.66666666666667,
+    "pi_rows": 12,
+    "epk_tied_um": 11.556115649773274,
+    "epk_spring_um": 9.244892519818618,
+    "zn_um": 13.48700844595563,
+    "kappa_fe_over_kappa": 0.9999999101806213,
+    "time_s": 21.587218255999996,
+    "d_spring_pct": 0.0,
+    "d_tied_pct": 0.0
+   }
+  ],
+  "production_level": 3,
+  "island_local_kappa_ratio": 0.07754696888727053,
+  "island_ratio_to_baseline": 0.22833082346299355,
+  "island": {
+   "epk_bonded": 2.638616427467779e-06,
+   "k_local": 1.6822674570375007,
+   "k_mean": 21.693529498013014,
+   "k_local_over_mean": 0.07754696888727053,
+   "k_unsupported": 29.89851826964157,
+   "nodes": 30759,
+   "elements": 9960
+  },
+  "nu0_check": {
+   "zn_m": 1.3432598608611018e-05,
+   "epk_tied_m": 1.1610524820770863e-05
+  },
+  "zn_m": 1.3487010383759258e-05,
+  "epk": {
+   "Baseline: 25 um PI, 5 nm Al2O3": 9.244889104148235e-06,
+   "Polymer encapsulation (1 um PMMA)": 1.1048411092747767e-05,
+   "Thinner substrate (12.5 um PI)": 4.306544316952593e-06,
+   "Ultrathin substrate (2.5 um PET)": 6.912283550143609e-07,
+   "Neutral-plane buried channel + extended gate (1 um tol.)": 9.808743530645653e-07,
+   "Rigid island (4.2 % strain ratio)": 2.1108931419742234e-06,
+   "Prebent channel (1e-3 strain ratio)": 9.244889104148235e-09
+  },
+  "sym_epk_m": 2.240215139749828e-08,
+  "buried_zn_m": 2.406945759122909e-05,
+  "baseline_tied_epk_m": 1.1556111380185293e-05,
+  "structures": {
+   "baseline": {
+    "kappa": 39.99997610282537,
+    "zn": 1.3487010383759258e-05,
+    "eps_mos2": 0.000462244179049,
+    "epk_bonded": 1.1556111380185293e-05,
+    "uniformity": 3.755968869256776e-08,
+    "nodes": 119023.0,
+    "elements": 37400.0,
+    "time_s": 10.614306036999999
+   },
+   "pi_12p5": {
+    "kappa": 40.00048869785692,
+    "zn": 7.167146619014502e-06,
+    "eps_mos2": 0.00021532984659635267,
+    "epk_bonded": 5.383180396190741e-06,
+    "uniformity": 1.2968583524841648e-06,
+    "nodes": 119023.0,
+    "elements": 37400.0,
+    "time_s": 10.473633140999993
+   },
+   "pet_2p5": {
+    "kappa": 40.045755258354944,
+    "zn": 1.6863077475918061e-06,
+    "eps_mos2": 3.4600951915675476e-05,
+    "epk_bonded": 8.640354437679511e-07,
+    "uniformity": 0.00024000519842160006,
+    "nodes": 119023.0,
+    "elements": 37400.0,
+    "time_s": 10.754058921999999
+   },
+   "pmma_cap": {
+    "kappa": 40.00009316070206,
+    "zn": 1.4001918214455952e-05,
+    "eps_mos2": 0.0004419374729876447,
+    "epk_bonded": 1.1048411092747767e-05,
+    "uniformity": 2.5166368644580217e-07,
+    "nodes": 159831.0,
+    "elements": 51000.0,
+    "time_s": 14.861752349
+   },
+   "buried": {
+    "kappa": 39.999996351788916,
+    "zn": 2.406945759122909e-05,
+    "eps_mos2": 3.923497054414593e-05,
+    "epk_bonded": 9.808743530645653e-07,
+    "uniformity": 8.528736368251799e-07,
+    "nodes": 200639.0,
+    "elements": 64600.0,
+    "time_s": 19.721401289
+   },
+   "symmetric": {
+    "kappa": 39.9999944490924,
+    "zn": 2.5027927520490337e-05,
+    "eps_mos2": 8.960859315476588e-07,
+    "epk_bonded": 2.240215139749828e-08,
+    "uniformity": 5.941186838054335e-07,
+    "nodes": 200639.0,
+    "elements": 64600.0,
+    "time_s": 20.492648469999992
+   }
+  },
+  "eta_note": "eta applied as a strain-transfer factor on the bonded MoS2 strain (0.8 ALD cap, 1.0 polymer/buried)",
+  "calib": {
+   "k_bare": null,
+   "eta_bare": 0.5,
+   "k_ALD": null,
+   "eta_ALD": 0.8,
+   "eta_polymer": 1.0
+  },
+  "runtimes": {
+   "elmer_baseline": 52.99236636499999,
+   "elmer_pi_12p5": 10.473633140999993,
+   "elmer_pet_2p5": 10.754058921999999,
+   "elmer_pmma_cap": 14.861752349,
+   "elmer_buried": 19.721401289,
+   "elmer_symmetric": 20.492648469999992,
+   "elmer_rigid_island": 3.515884473,
+   "elmer_check_nu0": 10.369115894000004,
+   "total_mech_s": 143.545192626
+  }
+ },
+ "chain": {
+  "FS": 0.07655777133646693,
+  "V_ov": 0.3,
+  "dVT_max_V": 0.02296733140094008,
+  "K_D_nM": 50.0,
+  "ngml_to_nM": 2.758925122772168,
+  "scalars": {
+   "GF_ch_0p3": 38.03517721716275,
+   "GF_c": 212.74949713755223,
+   "GF_tot_0p3": 90.44947319327959,
+   "lambda_D_nm": 1.359529330319872,
+   "dVT_sweat_mV": 22.96733140094008,
+   "FS_pct": 7.655777133646693,
+   "K_D_ngml": 18.123,
+   "k_on": 40000.0,
+   "tau_100ngml_s": 76.71240994556521,
+   "R_phys_low_pct": 2.3768649473255348,
+   "R_phys_high_pct": 6.7876564689546335,
+   "john_sum": 202,
+   "li_xt": 28.9,
+   "datye": 0.9972081440659541,
+   "GF_ch_0p145": 98.82146819683126,
+   "lambda_100mM_formula_nm": 0.9613324086911873
+  },
+  "motions": {
+   "wrist": {
+    "eps": 0.0003697955641659294,
+    "dI": 0.03356431646950009,
+    "lin_false30": 56.02267238882658,
+    "C_false30": 0.0,
+    "sat30": true,
+    "C_false50": 0.0,
+    "sat50": true
+   },
+   "elbow": {
+    "eps": 0.00023112222760370588,
+    "dI": 0.020951056523710543,
+    "lin_false30": 34.96970292525386,
+    "C_false30": 151.71792790806163,
+    "sat30": false,
+    "C_false50": 0.0,
+    "sat50": true
+   },
+   "walking": {
+    "eps": 3.081629701382745e-05,
+    "dI": 0.0027881559770996933,
+    "lin_false30": 4.65375033082958,
+    "C_false30": 5.4089386630332745,
+    "sat30": false,
+    "C_false50": 11.47137244011734,
+    "sat50": false
+   },
+   "hold": {
+    "eps": 0.0003081629701382745,
+    "dI": 0.027954605724252346,
+    "lin_false30": 46.659425335585595,
+    "C_false30": 0.0,
+    "sat30": true,
+    "C_false50": 0.0,
+    "sat50": true
+   }
+  },
+  "xtalk_floor": 0.023070492311043262,
+  "mitigation": {
+   "Baseline: 25 um PI, 5 nm Al2O3": {
+    "wrist": 0.43841814989606837,
+    "elbow": 0.2736633545878951,
+    "walking": 0.036418980443486404,
+    "eps_wrist": 0.0003697955641659294
+   },
+   "Polymer encapsulation (1 um PMMA)": {
+    "wrist": 0.5242845765611455,
+    "elbow": 0.3271870265992202,
+    "walking": 0.04352625211363822,
+    "eps_wrist": 0.0004419364437099107
+   },
+   "Thinner substrate (12.5 um PI)": {
+    "wrist": 0.2038564316154809,
+    "elbow": 0.1273321510857203,
+    "walking": 0.016962324180295765,
+    "eps_wrist": 0.0001722617726781037
+   },
+   "Ultrathin substrate (2.5 um PET)": {
+    "wrist": 0.032674991952879186,
+    "elbow": 0.020419807411511216,
+    "walking": 0.0027222427066388964,
+    "eps_wrist": 2.7649134200574436e-05
+   },
+   "Neutral-plane buried channel + extended gate (1 um tol.)": {
+    "wrist": 0.04637204211435533,
+    "elbow": 0.0289783811799636,
+    "walking": 0.003862982841666531,
+    "eps_wrist": 3.923497412258261e-05
+   },
+   "Rigid island (4.2 % strain ratio)": {
+    "wrist": 0.0998386464451974,
+    "elbow": 0.06238010294071716,
+    "walking": 0.008313648231875971,
+    "eps_wrist": 8.443572567896893e-05
+   },
+   "Prebent channel (1e-3 strain ratio)": {
+    "wrist": 0.00043689797207167343,
+    "elbow": 0.00027306086189374967,
+    "walking": 3.640804353353779e-05,
+    "eps_wrist": 3.697955641659294e-07
+   }
+  }
+ },
+ "debye": null,
+ "runtimes": {
+  "elmer_baseline": 52.99236636499999,
+  "elmer_pi_12p5": 10.473633140999993,
+  "elmer_pet_2p5": 10.754058921999999,
+  "elmer_pmma_cap": 14.861752349,
+  "elmer_buried": 19.721401289,
+  "elmer_symmetric": 20.492648469999992,
+  "elmer_rigid_island": 3.515884473,
+  "elmer_check_nu0": 10.369115894000004,
+  "total_mech_s": 143.545192626
+ },
+ "comsol_version": "Elmer FEM 9.0 (ElmerSolver 26.2), StressSolver, 2D plane strain"
+}

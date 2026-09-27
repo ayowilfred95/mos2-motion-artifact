@@ -9,3 +9,4 @@ elmer/models/*/results/
 elmer/models/*/*/mesh.*
 elmer/models/*/*.log
 elmer/models/*/case_eq.sif
+elmer/models/*/*/

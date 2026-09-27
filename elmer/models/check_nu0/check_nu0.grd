@@ -1,4 +1,4 @@
-##### Verification: baseline stack with all Poisson ratios = 0 (1D beam theory): ElmerGrid structured mesh (bodies bottom->top: PI, Au, MoS2, Al2O3) #####
+##### Verification: all Poisson ratios = 0: ElmerGrid structured mesh (bodies bottom->top: PI, Au, MoS2, Al2O3) #####
 Version = 210903
 Coordinate System = Cartesian 2D
 Subcell Divisions in 2D = 2 4
