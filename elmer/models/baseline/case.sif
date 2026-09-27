@@ -76,6 +76,7 @@ Solver 3
   Procedure = "ResultOutputSolve" "ResultOutputSolver"
   Output File Name = "baseline"
   Vtu Format = True
+  Ascii Output = True
 End
 
 Material 1

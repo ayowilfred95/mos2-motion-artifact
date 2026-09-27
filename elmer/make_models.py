@@ -161,6 +161,7 @@ Solver 3
   Procedure = "ResultOutputSolve" "ResultOutputSolver"
   Output File Name = "{name}"
   Vtu Format = True
+  Ascii Output = True
 End
 
 {mats}
