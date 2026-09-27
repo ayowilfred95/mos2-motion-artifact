@@ -1,0 +1,34 @@
+kap_t	if(mot==0, (t>=300[s])*(t<600[s])*sin(2*pi*f_walk*(t-300[s]))/R_walk + (t>=600[s])*(t<900[s])*0.5*(1-cos(2*pi*f_flex*(t-600[s])))/R_wrist + (t>=900[s])*(t<1200[s])/R_hold + (t>=1200[s])*(t<1500[s])*0.5*(1-cos(2*pi*f_flex*(t-1200[s])))/R_elbow, (mot==1)*0.5*(1-cos(2*pi*f_flex*t))/R_wrist + (mot==2)*0.5*(1-cos(2*pi*f_flex*t))/R_elbow + (mot==3)*sin(2*pi*f_walk*t)/R_walk + (mot==4)/R_hold)
+kap	kap_s + kap_t
+eps	epk*kap + eps_s
+GF_ch	GF_min + (GF_max-GF_min)*exp(-(V_ov-V0_gf)/V_gf)
+GF_c	-dPhiB_ps/kT
+GF_tot	(1-r_c)*GF_ch + r_c*GF_c
+dPhiB	dPhiB_ps*eps
+R_rel	(1-r_c)*exp(-GF_ch*eps) + r_c*exp(dPhiB/kT)
+dI_strain	1/R_rel - 1
+xtalk	1 + kappa_x*eps
+lambda_D	0.304[nm]/sqrt(I_ion/1[M])
+dVT_max	dVT_vac*exp(-d_charge/lambda_D)
+FS	dVT_max/V_ov
+Cb	C0 + (t>=t_step)*(C_step-C0)
+Cb_M	Cb/MW
+R_bio0	dVT_max*theta/V_ov
+R_bio	R_bio0*xtalk
+R_sens	R_bio + dI_strain
+R_ref	dI_strain*(1+mism)
+R_twin	R_sens - R_ref
+th_app	max(R_sens*V_ov/dVT_max, 0)
+sat	th_app>=1
+C_app	K_D*th_app/max(1-th_app, 1e-12)
+C_false	(C_app - Cb_M)*MW
+S_lin	FS*K_D/(Cb_M+K_D)^2
+C_false_lin	dI_strain/S_lin*MW
+art_FS	dI_strain/FS
+resid_twin	abs(dI_strain*mism + kappa_x*eps*R_bio0)/FS
+resid_twin_noX	abs(dI_strain*mism)/FS
+xt_floor	kappa_x*eps*R_bio0/FS
+tau_on	1/(k_on*Cb_M + k_off)
+K_D_ngml	K_D*MW
+john_sum	Phi_lit + (-dPhiB_ps/1[V])*0.01*1000
+li_xt	kappa_x*0.0034*100

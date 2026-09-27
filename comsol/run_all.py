@@ -29,7 +29,7 @@ sys.path.insert(0, HERE)
 
 import params as prm                                            # noqa: E402
 import build_model as bm                                        # noqa: E402
-from comsol_util import dataset_of_study, eval_global, eval_nodes, setp_first, Timer  # noqa: E402
+from comsol_util import dataset_of_study, eval_global, setp_first, Timer  # noqa: E402
 from assemble import STRUCTS, PREBENT_RATIO, assemble          # noqa: E402
 
 DATA = os.path.join(HERE, "data")
@@ -406,22 +406,9 @@ def run_debye(client):
     model = bm.build_debye(client)
     with T("debye"):
         model.java.study("std1").run()
-    ds = dataset_of_study(model, "std1")
-    coords, vals = eval_nodes(model, "V", ds, "V")
-    x = coords.ravel() * 1e9                            # nm
-    vals = vals.reshape(-1, x.size)
-    order = np.argsort(x)
-    x = x[order]
-    out = {}
-    for i, c in enumerate((50, 100)):
-        V = vals[i][order]
-        lam = 1.0
-        for _ in range(3):                              # fit ln V on [0, 4 lambda] (linear PB regime)
-            sel = (x <= 4 * lam) & (V > 0)
-            lam = -1.0 / np.polyfit(x[sel], np.log(V[sel]), 1)[0]
-        out[f"lambda_{c}mM_nm"] = float(lam)
+    lam = eval_global(model, ["comp1.lam_int"], dataset_of_study(model, "std1"), ["nm"])[0]
     model.save(os.path.join(HERE, "debye_1d.mph"))
-    return out
+    return {"lambda_50mM_nm": float(lam[0]), "lambda_100mM_nm": float(lam[1])}
 
 
 # ====================================================================== main

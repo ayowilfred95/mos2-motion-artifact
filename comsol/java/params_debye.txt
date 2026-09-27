@@ -1,0 +1,6 @@
+T_room	298.15[K]
+epsr_w	78.5
+psi0_PB	0.001[V]
+c_ion	50[mM]
+L_PB	40[nm]
+Vth	R_const*T_room/F_const

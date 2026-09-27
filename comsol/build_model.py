@@ -220,8 +220,9 @@ def build_mech_component(model, c, spec, level):
         st = j.study().create(f"std_{c}_{kind}")
         st.label(f"{c}: {kind}")
         step = st.create("stat", "Stationary")
+        existing = [str(t) for t in j.component().tags()]
         for other in mech_specs():
-            if other != c:
+            if other != c and other in existing:
                 step.activate(f"solid_{other}", False)
                 step.activate(f"wbf_{other}", False)
         step.set("useparam", True)
@@ -233,6 +234,13 @@ def build_mech_component(model, c, spec, level):
             step.set("disabledphysics", [f"wbf_{c}/pc1"])
         st.setGenPlots(False)
         st.setGenConv(False)
+    # studies of components built earlier must not solve this component's physics
+    studies = [str(t) for t in j.study().tags()]
+    for other in mech_specs():
+        if other != c and f"std_{other}_spring" in studies:
+            for kind in ("spring", "tied"):
+                j.study(f"std_{other}_{kind}").feature("stat").activate(f"solid_{c}", False)
+                j.study(f"std_{other}_{kind}").feature("stat").activate(f"wbf_{c}", False)
     return comp
 
 
@@ -302,7 +310,7 @@ def add_strain_plot(model, c, study, inner_index, view, fname_tag):
     except Exception:
         pass
     vtag = f"view_{fname_tag}"
-    vw = j.component(c).view().create(vtag, 2)
+    vw = j.component(c).view().create(vtag, f"geom_{c}")
     ax = vw.axis()
     for k, val in zip(("xmin", "xmax", "ymin", "ymax"), view):
         ax.set(k, repr(val))
@@ -429,6 +437,10 @@ def build_debye(client):
     setp(pot, "V0", "psi0_PB")
     gnd = es.create("gnd1", "Ground", 0)
     gnd.selection().set([2])
+    # lambda_D = integral(V dx)/psi0, exact for the linear-regime solution V = psi0 exp(-x/lambda_D)
+    op = comp.cpl().create("intop1", "Integration", "geom1")
+    op.selection().all()
+    comp.variable().create("var1").set("lam_int", "intop1(V)/psi0_PB", "Debye length from integral of V")
     mesh = comp.mesh().create("mesh1")
     ed = mesh.create("edg1", "Edge")
     ed.selection().all()

@@ -167,7 +167,7 @@ def main():
     w("## 3. Debye length (`debye_1d.mph`)\n")
     dbe = (raw or {}).get("debye") or {}
     w("Electrostatics (AC/DC), 1D, 40 nm electrolyte, space charge rho = -2 F c sinh(V/V_th), eps_r = 78.5, T = 298.15 K, "
-      "psi_0 = 1 mV (linear regime), 4000 elements. lambda_D is from a log-linear fit of V(x) over [0, 4 lambda_D].\n")
+      "psi_0 = 1 mV (linear regime), 4000 elements. lambda_D = (integral of V dx)/psi_0, which is exact for the linear solution V = psi_0 exp(-x/lambda_D).\n")
     w("| ionic strength | COMSOL lambda_D (nm) | 0.304/sqrt(I) (nm) |\n|---|---|---|")
     w(f"| 50 mM | {fmt(dbe.get('lambda_50mM_nm'), 5)} | 1.3595 |")
     w(f"| 100 mM | {fmt(dbe.get('lambda_100mM_nm'), 5)} | 0.9613 |\n")
