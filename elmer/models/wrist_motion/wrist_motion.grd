@@ -1,4 +1,4 @@
-##### Baseline stack, wrist flexion: flat -> R = 25 mm -> flat in 21 steps (0.1 s apart): ElmerGrid structured mesh (bodies bottom->top: PI, Au, MoS2, Al2O3) #####
+##### Elmer: baseline sensor, wrist flexion (flat -> R = 25 mm -> flat): ElmerGrid structured mesh (bodies bottom->top: PI, Au, MoS2, Al2O3) #####
 Version = 210903
 Coordinate System = Cartesian 2D
 Subcell Divisions in 2D = 2 4

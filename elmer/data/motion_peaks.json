@@ -1,0 +1,56 @@
+[
+ {
+  "run": "wrist_motion",
+  "point": "peak",
+  "t_s": 1.0,
+  "kappa": 40.0,
+  "strain_pct": 0.03700258466552648,
+  "current_pct": 3.3585287734207325,
+  "reading_ngml": null
+ },
+ {
+  "run": "elbow_motion",
+  "point": "peak",
+  "t_s": 1.0,
+  "kappa": 25.0,
+  "strain_pct": 0.023126615415937152,
+  "current_pct": 2.0964131434924482,
+  "reading_ngml": 182.1118558242091
+ },
+ {
+  "run": "walking_motion",
+  "point": "peak",
+  "t_s": 0.1388888888888889,
+  "kappa": 3.3333333333333335,
+  "strain_pct": 0.003083548722125352,
+  "current_pct": 0.27898927637803883,
+  "reading_ngml": 35.41268689594902
+ },
+ {
+  "run": "walking_motion",
+  "point": "most negative",
+  "t_s": 0.4166666666666667,
+  "kappa": -3.3333333333333335,
+  "strain_pct": -0.003083548722125352,
+  "current_pct": -0.27882089964773593,
+  "reading_ngml": 25.583625707115885
+ },
+ {
+  "run": "pet_wrist_motion",
+  "point": "peak",
+  "t_s": 1.0,
+  "kappa": 40.0,
+  "strain_pct": 0.0027680178743147857,
+  "current_pct": 0.2504334039189482,
+  "reading_ngml": 34.803381087673614
+ },
+ {
+  "run": "island_wrist_motion",
+  "point": "peak",
+  "t_s": 1.0,
+  "kappa": 40.0,
+  "strain_pct": 0.008443572567895416,
+  "current_pct": 0.7643424265092236,
+  "reading_ngml": 48.436024480696624
+ }
+]
