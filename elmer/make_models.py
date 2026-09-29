@@ -46,7 +46,10 @@ def x_cells(nx=NX_SEG):
     return [0.0, LF / 2, L_SEG], [n1, nx - n1]
 
 
-def model(name, layers, title, nx=NX_SEG):
+def model(name, layers, title, nx=NX_SEG, steps=None):
+    """steps: None = one static solve at wrist curvature. An integer N = a stepped wrist flexion
+    (Elmer "Scanning" simulation): step i of N bends the patch by 0.5*(1 - cos(2 pi (i-1)/(N-1))) of the wrist
+    curvature, i.e. one flat -> bent -> flat cycle, and writes one result file per step."""
     """layers: bottom -> top list of (material, thickness [m], elements through thickness)."""
     d = os.path.join(HERE, "models", name)
     os.makedirs(d, exist_ok=True)
@@ -96,6 +99,13 @@ Element Divisions 2 = {' '.join(str(n) for _, _, n in layers)}
     zn = sum(e * t * z for e, t, z in zip(Ep, ts, zc)) / sum(e * t for e, t in zip(Ep, ts))
     D = sum(e * (t ** 3 / 12 + t * (z - zn) ** 2) for e, t, z in zip(Ep, ts, zc))
     s = 12 * D / R_WRIST / H ** 3                # traction s*(y - ym) carries the moment s*H^3/12
+    if steps:
+        sim_type = f"Simulation Type = Scanning\n  Timestep Intervals(1) = {steps}"
+        force = ("Force 1 = Variable Coordinate 2, Time\n"
+                 f'    Real MATC "{s!r}*(tx(0)-{ym!r})*0.5*(1-cos(2*pi*(tx(1)-1)/{steps - 1}))"')
+    else:
+        sim_type = "Simulation Type = Steady state"
+        force = f'Force 1 = Variable Coordinate 2\n    Real MATC "{s!r}*(tx-{ym!r})"'
     bodies = "\n".join(f"""Body {i + 1}
   Name = "{m}"
   Target Bodies(1) = {i + 1}
@@ -123,7 +133,7 @@ End
 Simulation
   Max Output Level = 5
   Coordinate System = Cartesian 2D
-  Simulation Type = Steady state
+  {sim_type}
   Steady State Max Iterations = 1
   Output Intervals(1) = 1
 End
@@ -170,8 +180,7 @@ End
 Boundary Condition 1
   Name = "right end: moment"
   Target Boundaries(1) = 2
-  Force 1 = Variable Coordinate 2
-    Real MATC "{s!r}*(tx-{ym!r})"
+  {force}
 End
 
 Boundary Condition 2
