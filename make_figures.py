@@ -300,6 +300,9 @@ def plot_figs_3_8(C):
     fig, axs = plt.subplots(1, 2, figsize=(DBL, 2.9), gridspec_kw=dict(width_ratios=[1.5, 1]))
     ax = axs[0]
     names = [str(n) for n in C["fig8a_names"]]
+    if SRC == "elmer":   # FE geometries replace the analytic ratios; keys in results.json stay unchanged
+        names = [n.replace("Rigid island (4.2 % strain ratio)", "Rigid island (FE, 100 um PDMS)")
+                  .replace(" (1 um tol.)", " (FE, 0.98 um offset)") for n in names]
     y = np.arange(len(names))
     ax.barh(y + 0.27, C["fig8a_w"], 0.26, color="#c0392b", label="wrist (R = 25 mm)")
     ax.barh(y, C["fig8a_e"], 0.26, color="#2980b9", label="elbow (R = 40 mm)")
@@ -307,7 +310,7 @@ def plot_figs_3_8(C):
     ax.set_xscale("log"); ax.set_yticks(y); ax.set_yticklabels([n.replace(" + extended gate", "\n+ extended gate") for n in names], fontsize=6)
     ax.axvline(100, color="k", ls="--", lw=0.7); ax.text(100, -0.75, "100 % FS", fontsize=6, ha="center")
     ax.axvline(10, color="#888", ls=":", lw=0.7); ax.text(10, -0.75, "10 % FS", fontsize=6, ha="center")
-    ax.set_xlabel("Peak motion artifact (% of full-scale cortisol response)"); ax.legend(frameon=False, fontsize=6, loc="lower right"); ax.invert_yaxis()
+    ax.set_xlabel("Peak motion artifact (% of full-scale cortisol response)"); ax.legend(frameon=False, fontsize=6, loc="upper center", bbox_to_anchor=(0.5, -0.17), ncol=3); ax.invert_yaxis()
     ax.text(0.01, 1.02, "(a)", transform=ax.transAxes)
     ax = axs[1]
     Vov = C["gate_V"]
