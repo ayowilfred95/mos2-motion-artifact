@@ -11,3 +11,5 @@ elmer/models/*/*.log
 elmer/models/*/case_eq.sif
 elmer/models/*/*/
 elmer/models/*_motion/results/
+.venv_old_pre_update/
+*.btr

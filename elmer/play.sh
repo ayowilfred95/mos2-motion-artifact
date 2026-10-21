@@ -10,11 +10,12 @@ case "$1" in
   *) echo "usage: elmer/play.sh wrist | elbow | walking | pet | island"; exit 1 ;;
 esac
 TITLE=$(grep -A4 "\"$M\"" "$(dirname "$0")/data/motions.json" | grep '"title"' | sed 's/.*"title": "\(.*\)",*/\1/')
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"   # project folder; the Linux machine sees it at the same path
 orb -m elmer bash -c "
 export DISPLAY=:1 $V TITLE='$TITLE (21 solved steps)'
 pkill -x paraview; sleep 2
-cd /Users/ayomide/Downloads/mos2_motion_artifact/elmer/models/$M || exit 1
-nohup paraview --script=/Users/ayomide/Downloads/mos2_motion_artifact/elmer/show_motion.py > /tmp/pv_run.log 2>&1 &
+cd $ROOT/elmer/models/$M || exit 1
+nohup paraview --script=$ROOT/elmer/show_motion.py > /tmp/pv_run.log 2>&1 &
 for i in \$(seq 1 60); do WIN=\$(xdotool search --name 'Welcome to ParaView' 2>/dev/null | head -1); [ -n \"\$WIN\" ] && break; sleep 1; done
 sleep 3
 [ -n \"\$WIN\" ] && xdotool windowactivate --sync \$WIN 2>/dev/null && xdotool key Escape 2>/dev/null
