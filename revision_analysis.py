@@ -190,7 +190,7 @@ def sensitivity_motion():
 
 
 def fig_floor(path):
-    plt.rcParams.update({"font.family": "serif", "font.serif": ["DejaVu Serif", "Times New Roman"],
+    plt.rcParams.update({"font.family": "sans-serif", "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans"],
                          "font.size": 7, "axes.labelsize": 7, "xtick.labelsize": 6.5, "ytick.labelsize": 6.5})   # as make_figures.py
     c = np.logspace(0, np.log10(300), 300)
     fig, ax = plt.subplots(figsize=(3.4, 2.4))
@@ -205,7 +205,7 @@ def fig_floor(path):
     ax.set_xscale("log"); ax.set_ylim(0, 3.3)
     ax.set_xlabel("True cortisol (ng/mL)"); ax.set_ylabel("Cross-talk floor\n(% of full scale)")
     ax.legend(frameon=False, fontsize=6, loc="center left"); ax.grid(alpha=0.3, lw=0.4, which="both")
-    fig.tight_layout(); fig.savefig(path, dpi=600, bbox_inches="tight"); plt.close(fig)
+    fig.tight_layout(); fig.savefig(path, dpi=1200, bbox_inches="tight"); plt.close(fig)
 
 
 def clean(o):

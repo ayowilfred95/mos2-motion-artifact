@@ -30,21 +30,20 @@ def render(model, out, warp, ysc, lim, title):
     os.environ.update(WARP=str(warp), YSCALE=str(ysc), LIM=str(lim), TITLE=title)
     exec(open(SHOW).read(), {"__name__": "__main__"})
     view = GetActiveView()
-    keep = ("bent shape", "neutral plane", "title")
+    keep = ("bent shape", "neutral plane")   # no title inside the figure (JCE artwork rules)
     for (name, _), src in GetSources().items():
         if not name.startswith(keep):
             Hide(src, view)                      # the undeformed mesh and intermediate filters
-    view.ViewSize = [3200, 1400]
+    view.ViewSize = [4200, 1838]   # 600 dpi at 174 mm (JCE double-column width)
     view.OrientationAxesVisibility = 0
-    GetDisplayProperties(FindSource("title"), view).FontSize = 26
     bar = GetScalarBar(GetColorTransferFunction("axialstrain"), view)
-    bar.TitleFontSize = 26
-    bar.LabelFontSize = 22
+    bar.TitleFontSize = 34
+    bar.LabelFontSize = 29
     bar.ScalarBarLength = 0.45
     ResetCamera(view)
     view.CameraParallelScale *= 0.72
     path = os.path.join(FIGS, f"elmer_strain_{out}.png")
-    SaveScreenshot(path, view, ImageResolution=[3200, 1400], TransparentBackground=0)
+    SaveScreenshot(path, view, ImageResolution=[4200, 1838], TransparentBackground=0)
     print("wrote", path)
 
 

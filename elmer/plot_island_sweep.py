@@ -4,6 +4,7 @@ import os
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+plt.rcParams.update({"font.family": "sans-serif", "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans"]})
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 d = json.load(open(os.path.join(HERE, "data", "island_sweep.json")))
@@ -24,5 +25,5 @@ ax.set_xticks(t); ax.set_xticklabels([f"{v:g}" for v in t])
 ax.legend(frameon=False, fontsize=6.5, loc="upper left", bbox_to_anchor=(0.0, 0.93)); ax.grid(alpha=0.3, lw=0.4, which="both")
 fig.tight_layout()
 os.makedirs(os.path.join(HERE, "figures"), exist_ok=True)
-fig.savefig(os.path.join(HERE, "figures", "island_pdms_sweep.png"), dpi=600)
+fig.savefig(os.path.join(HERE, "figures", "island_pdms_sweep.png"), dpi=1200)
 print("wrote elmer/figures/island_pdms_sweep.png")

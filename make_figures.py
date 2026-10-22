@@ -17,7 +17,7 @@ _ap = argparse.ArgumentParser()
 _ap.add_argument("--source", choices=["python", "comsol", "fem", "elmer"], default="python")
 SRC = _ap.parse_args().source
 
-plt.rcParams.update({"font.family": "serif", "font.serif": ["DejaVu Serif", "Times New Roman"],
+plt.rcParams.update({"font.family": "sans-serif", "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans"],   # JCE: Helvetica/Arial lettering
                      "font.size": 8, "axes.labelsize": 8, "legend.fontsize": 7, "xtick.labelsize": 7,
                      "ytick.labelsize": 7, "axes.linewidth": 0.6, "lines.linewidth": 1.0})
 OUT = "figures" if SRC == "python" else os.path.join(SRC, "figures")
@@ -47,7 +47,7 @@ def figs_1_2():
     ax.annotate("", xy=(gap + 5 * (w + gap) + w / 2, 27.5), xytext=(gap + w / 2, 27.5),
                 arrowprops=dict(arrowstyle="<-", connectionstyle="arc3,rad=-0.15", lw=0.7, ls="--", color="#8a3b0c"))
     ax.text(50, 29.3, "design sweep loop (substrate, encapsulation, geometry, gate bias)", ha="center", fontsize=6.5, color="#8a3b0c")
-    fig.savefig(f"{OUT}/fig1_framework.png", dpi=400, bbox_inches="tight"); plt.close(fig)
+    fig.savefig(f"{OUT}/fig1_framework.png", dpi=1200, bbox_inches="tight"); plt.close(fig)
 
     # ------------------------------------------------------------------ Fig.2 cross-section + neutral plane
     fig, axs = plt.subplots(1, 2, figsize=(DBL, 2.4), gridspec_kw=dict(width_ratios=[1.25, 1]))
@@ -79,7 +79,7 @@ def figs_1_2():
     ax.set_xlabel("Substrate thickness (um)"); ax.set_ylabel("Channel strain at R = 25 mm (%)")
     ax.legend(frameon=False, loc="lower right"); ax.grid(alpha=0.3, which="both", lw=0.4)
     ax.text(0.03, 0.93, "(b)", transform=ax.transAxes)
-    fig.tight_layout(); fig.savefig(f"{OUT}/fig2_stack.png", dpi=400, bbox_inches="tight"); plt.close(fig)
+    fig.tight_layout(); fig.savefig(f"{OUT}/fig2_stack.png", dpi=1200, bbox_inches="tight"); plt.close(fig)
 
 
 
@@ -207,7 +207,7 @@ def plot_figs_3_8(C):
         axs[0].plot(t, C[f"fig3_kap_{name}"], color=c, label=MOTIONS[name]["label"]); axs[1].plot(t, C[f"fig3_eps_{name}"] * 100, color=c)
     axs[0].set_ylabel("Curvature (1/m)"); axs[1].set_ylabel("Channel strain (%)"); axs[1].set_xlabel("Time (s)")
     axs[0].legend(frameon=False, fontsize=6.3); [a.grid(alpha=0.3, lw=0.4) for a in axs]
-    fig.tight_layout(); fig.savefig(f"{OUT}/fig3_motion.png", dpi=400, bbox_inches="tight"); plt.close(fig)
+    fig.tight_layout(); fig.savefig(f"{OUT}/fig3_motion.png", dpi=1200, bbox_inches="tight"); plt.close(fig)
 
     # Fig.4 strain->current decomposition & calibration
     fig, axs = plt.subplots(1, 2, figsize=(DBL, 2.5))
@@ -229,7 +229,7 @@ def plot_figs_3_8(C):
     ax.axvspan(8.16, 141.7, color="#d5f5e3", alpha=0.6); ax.text(30, 9.5, "physiological\nsweat range", fontsize=6, ha="center")
     ax.set_xlabel("Cortisol concentration (ng/mL)"); ax.set_ylabel("Response  $\\Delta I/I_0$ (%)"); ax.legend(frameon=False, fontsize=6, loc="lower right"); ax.grid(alpha=0.3, lw=0.4, which="both")
     ax.text(0.03, 0.92, "(b)", transform=ax.transAxes)
-    fig.tight_layout(); fig.savefig(f"{OUT}/fig4_electrical.png", dpi=400, bbox_inches="tight"); plt.close(fig)
+    fig.tight_layout(); fig.savefig(f"{OUT}/fig4_electrical.png", dpi=1200, bbox_inches="tight"); plt.close(fig)
 
     # Fig.5 false concentration vs motion, vs operating point
     fig, axs = plt.subplots(1, 2, figsize=(DBL, 2.5))
@@ -249,7 +249,7 @@ def plot_figs_3_8(C):
     ax.axhline(100, color="k", lw=0.6, ls="--"); ax.text(0.02, 106, "artifact = full physiological scale", fontsize=6)
     ax.set_xlabel("Contact fraction of total resistance $r_c$"); ax.set_ylabel("Peak artifact (% of full scale)"); ax.grid(alpha=0.3, lw=0.4); ax.legend(frameon=False, fontsize=6, loc="center left", bbox_to_anchor=(0.0,0.62)); ax.set_ylim(0,115)
     ax.text(0.03, 0.92, "(b)", transform=ax.transAxes)
-    fig.tight_layout(); fig.savefig(f"{OUT}/fig5_false_conc.png", dpi=400, bbox_inches="tight"); plt.close(fig)
+    fig.tight_layout(); fig.savefig(f"{OUT}/fig5_false_conc.png", dpi=1200, bbox_inches="tight"); plt.close(fig)
 
     # Fig.6 dynamic scenario
     b = lambda k: C[f"fig6_baseline_{k}"]; th = lambda k: C[f"fig6_thin_{k}"]
@@ -276,7 +276,7 @@ def plot_figs_3_8(C):
     ax.axhline(0,color="k",lw=0.4)
     ax.text(310, 4.5, "filter response at\ncortisol step", fontsize=6)
     [a.grid(alpha=0.3, lw=0.4) for a in axs]
-    fig.tight_layout(); fig.savefig(f"{OUT}/fig6_dynamic.png", dpi=400, bbox_inches="tight"); plt.close(fig)
+    fig.tight_layout(); fig.savefig(f"{OUT}/fig6_dynamic.png", dpi=1200, bbox_inches="tight"); plt.close(fig)
 
     # Fig.7 filter vs frequency and twin-sensor mismatch
     fc = 0.01
@@ -294,14 +294,14 @@ def plot_figs_3_8(C):
     ax.plot(C["fig7b_mism"] * 100, C["fig7b_resid_noX"], color="k", ls="--", label="without cross-talk")
     ax.set_xlabel("Twin-sensor gauge mismatch (%)"); ax.set_ylabel("Residual wrist artifact\n(% of full scale)"); ax.legend(frameon=False, fontsize=6); ax.grid(alpha=0.3, lw=0.4)
     ax.text(0.03, 0.92, "(b)", transform=ax.transAxes)
-    fig.tight_layout(); fig.savefig(f"{OUT}/fig7_filter_twin.png", dpi=400, bbox_inches="tight"); plt.close(fig)
+    fig.tight_layout(); fig.savefig(f"{OUT}/fig7_filter_twin.png", dpi=1200, bbox_inches="tight"); plt.close(fig)
 
     # Fig.8 mitigation comparison + gate bias
     fig, axs = plt.subplots(1, 2, figsize=(DBL, 2.9), gridspec_kw=dict(width_ratios=[1.5, 1]))
     ax = axs[0]
     names = [str(n) for n in C["fig8a_names"]]
     if SRC == "elmer":   # FE geometries replace the analytic ratios; keys in results.json stay unchanged
-        names = [n.replace("Rigid island (4.2 % strain ratio)", "Rigid island (FE, 100 um PDMS)")
+        names = [n.replace("Rigid island (4.2 % strain ratio)", "Rigid island (FE, 100 um PDMS, end moment)")
                   .replace(" (1 um tol.)", " (FE, 0.98 um offset)") for n in names]
     y = np.arange(len(names))
     ax.barh(y + 0.27, C["fig8a_w"], 0.26, color="#c0392b", label="wrist (R = 25 mm)")
@@ -319,7 +319,7 @@ def plot_figs_3_8(C):
         ax.plot(Vov, C[f"gate_ratio_rc{r:g}"] * 100, color=c, ls=ls, label=f"$r_c$ = {r:.1f}")
     ax.set_xlabel("Gate overdrive $V_{ov}$ (V)"); ax.set_ylabel("Wrist artifact / full-scale signal (%)"); ax.legend(frameon=False, fontsize=6, loc="upper left", bbox_to_anchor=(0.1,1.0)); ax.grid(alpha=0.3, lw=0.4)
     ax.text(0.03, 0.93, "(b)", transform=ax.transAxes)
-    fig.tight_layout(); fig.savefig(f"{OUT}/fig8_mitigation.png", dpi=400, bbox_inches="tight"); plt.close(fig)
+    fig.tight_layout(); fig.savefig(f"{OUT}/fig8_mitigation.png", dpi=1200, bbox_inches="tight"); plt.close(fig)
 
 
 if SRC == "python":
