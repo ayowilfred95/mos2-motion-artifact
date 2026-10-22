@@ -1,0 +1,102 @@
+{
+ "pet_convergence": [
+  {
+   "level": 1,
+   "elements": 11900,
+   "x_elem_nm": 117.64705882352942,
+   "pet_rows": 4,
+   "epk_bonded_um": 0.8640391846649427,
+   "zn_um": 1.6863038860389448,
+   "change_vs_finest_pct": 0.006616737441489384
+  },
+  {
+   "level": 2,
+   "elements": 21600,
+   "x_elem_nm": 83.33333333333334,
+   "pet_rows": 6,
+   "epk_bonded_um": 0.8640425714371794,
+   "zn_um": 1.686304386238292,
+   "change_vs_finest_pct": 0.007008733127666922
+  },
+  {
+   "level": 3,
+   "elements": 37400,
+   "x_elem_nm": 58.82352941176471,
+   "pet_rows": 8,
+   "epk_bonded_um": 0.8640354437679512,
+   "zn_um": 1.6863077475918062,
+   "change_vs_finest_pct": 0.0061837542408182955
+  },
+  {
+   "level": 4,
+   "elements": 72000,
+   "x_elem_nm": 41.66666666666667,
+   "pet_rows": 12,
+   "epk_bonded_um": 0.8639820172433199,
+   "zn_um": 1.6863229811243994,
+   "change_vs_finest_pct": 0.0
+  }
+ ],
+ "island_convergence": [
+  {
+   "scale": 0.5,
+   "elements": 2484,
+   "ratio_to_baseline": 0.2283654417517968,
+   "k_local_over_mean": 0.0775587270567484,
+   "change_vs_finest_pct": 0.024678757105611737
+  },
+  {
+   "scale": 1,
+   "elements": 9960,
+   "ratio_to_baseline": 0.22833082346299355,
+   "k_local_over_mean": 0.07754696888727053,
+   "change_vs_finest_pct": 0.009515853340036351
+  },
+  {
+   "scale": 2,
+   "elements": 39840,
+   "ratio_to_baseline": 0.22830909790407503,
+   "k_local_over_mean": 0.07753958837068871,
+   "change_vs_finest_pct": 0.0
+  }
+ ],
+ "skin_curvature": {
+  "island_skin_bonded_with": {
+   "loading": "skin_bonded",
+   "island": true,
+   "kappa_imposed": 40.0,
+   "kappa_local": 40.019073486125464,
+   "eps_mos2": 0.0015205098645185375,
+   "epk_um": 38.01274661296344,
+   "ratio_to_baseline": 3.2894063896045567
+  },
+  "island_skin_bonded_without": {
+   "loading": "skin_bonded",
+   "island": false,
+   "kappa_imposed": 40.0,
+   "kappa_local": 39.98397547663617,
+   "eps_mos2": 0.003147344999217803,
+   "epk_um": 78.68362498044507,
+   "ratio_to_baseline": 6.808832347822477
+  },
+  "island_skin_sliding_with": {
+   "loading": "skin_sliding",
+   "island": true,
+   "kappa_imposed": 40.0,
+   "kappa_local": 39.63794808002484,
+   "eps_mos2": 0.0013487172959921652,
+   "epk_um": 33.717932399804134,
+   "ratio_to_baseline": 2.917757651385971
+  },
+  "island_skin_sliding_without": {
+   "loading": "skin_sliding",
+   "island": false,
+   "kappa_imposed": 40.0,
+   "kappa_local": 40.00000000317176,
+   "eps_mos2": 0.0005112891521507638,
+   "epk_um": 12.782228803769096,
+   "ratio_to_baseline": 1.1061012120120413
+  }
+ },
+ "solver": "ElmerSolver 26.2 StressSolver, plane strain, linear system: direct (UMFPACK), quadratic 8-node quadrilaterals; no iterative tolerance applies"
+}

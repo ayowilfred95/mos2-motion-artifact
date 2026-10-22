@@ -220,10 +220,15 @@ if __name__ == "__main__":
 
 # ---------------------------------------------------------------- rigid island (full-length strip)
 def model_island(name="rigid_island", title="Rigid island: 3 mm x 20 um island (70 GPa) in 100 um PDMS under 25 um PI",
-                 scale=1, t_pdms=None, steps=None, motion="wrist", load_scale=1.0):
+                 scale=1, t_pdms=None, steps=None, motion="wrist", load_scale=1.0,
+                 loading="moment", island=True, kappa=1 / R_WRIST):
     """
     Half strip x = 0 (channel centre, symmetry) ... 5 mm, bent by a pure end moment. Layers bottom -> top:
     PDMS carrier (-100 ... -20 um), island row (-20 ... 0 um: island for x < 1.5 mm, PDMS beyond), PI 25 um.
+    loading: "moment" (end moment through the PI film, as in the paper) or a curvature kappa prescribed on
+    the PDMS underside, which conforms to the skin: "skin_bonded" (underside cannot stretch: u_x = 0,
+    u_y = -kappa x^2 / 2) or "skin_sliding" (underside follows the arc but may slide: only u_y prescribed).
+    island=False replaces the island by PDMS (same mesh) for a like-for-like reference.
     The nanometre films are left out here: their in-plane stiffness (~5e3 N/m) is 0.3 % of the island
     region's (1.4e6 N/m), and they would need ~60 nm elements over the full 5 mm. The MoS2 strain is read
     from the PI surface strain plus h_MoS2 times the local curvature (Kirchhoff, exact for bonded films).
@@ -402,6 +407,26 @@ Boundary Condition 3
   Name = "pin at x=0, bottom (no vertical rigid motion)"
   Target Coordinates(1,2) = 0.0 {-tp!r}
   Displacement 2 = 0.0
+End
+"""
+    if not island:          # same mesh, island body made of PDMS
+        sif = sif.replace('Name = "rigid island"\n  Target Bodies(1) = 2\n  Equation = 1\n  Material = 2',
+                          'Name = "rigid island"\n  Target Bodies(1) = 2\n  Equation = 1\n  Material = 1')
+    if loading != "moment":   # curvature imposed by the skin on the PDMS underside; no end moment
+        i = sif.index("! moment load")
+        ux = "  Displacement 1 = 0.0\n" if loading == "skin_bonded" else ""
+        sif = sif[:i] + f"""! skin-imposed curvature kappa = {kappa!r} 1/m on the PDMS underside ({loading})
+Boundary Condition 1
+  Name = "PDMS underside follows the skin arc"
+  Target Boundaries(1) = 1
+{ux}  Displacement 2 = Variable Coordinate 1
+    Real MATC "-0.5*{kappa!r}*tx^2"
+End
+
+Boundary Condition 2
+  Name = "x = 0: symmetry plane (channel centre)"
+  Target Boundaries(1) = 4
+  Displacement 1 = 0.0
 End
 """
     open(os.path.join(d, "case.sif"), "w").write(sif)

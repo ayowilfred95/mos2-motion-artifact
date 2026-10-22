@@ -274,7 +274,7 @@ def plot_figs_3_8(C):
     ax.plot(th("t"), th("C_twin_filt") - th("C_ideal"), color="#8e44ad", lw=0.8, label="twin + LPF, 2.5 um PET")
     ax.set_ylim(-4, 6); ax.set_ylabel("Error vs ideal\n(ng/mL)"); ax.set_xlabel("Time (s)"); ax.legend(frameon=False, fontsize=6, ncol=3, loc="upper right")
     ax.axhline(0,color="k",lw=0.4)
-    ax.text(310, 4.5, "filter lag at\ncortisol step", fontsize=6)
+    ax.text(310, 4.5, "filter response at\ncortisol step", fontsize=6)
     [a.grid(alpha=0.3, lw=0.4) for a in axs]
     fig.tight_layout(); fig.savefig(f"{OUT}/fig6_dynamic.png", dpi=400, bbox_inches="tight"); plt.close(fig)
 
