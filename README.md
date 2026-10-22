@@ -17,6 +17,8 @@ Sensors: A Dynamic Multiphysics and Finite-Element Simulation of Strain-Binding 
 | `elmer/models/<design>/` | `.grd` and `case.sif` of each model |
 | `elmer/data/`, `elmer/results.json`, `elmer/comparison.csv` | all generated data |
 | `fem/` | independent scikit-fem cross-check of the laminate mechanics |
+| `elmer/revision_runs.py` | PET and rigid-island mesh convergence (Tables E1, E2); rigid island under skin-imposed curvature (Table E3) |
+| `revision_analysis.py` | twin-sensor worked example (Appendix A), worked examples (Table B1), causal vs zero-phase filtering and mismatch cases (Tables C1, C2), sensitivity and robustness (Tables D1, D2), Fig. 7(c) |
 
 ## Requirements
 - Python 3.9 or later with the packages in `requirements.txt`
@@ -33,5 +35,7 @@ python -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python elmer/island_sweep.py     # PDMS sweep
 .venv/bin/python elmer/run_motions.py      # motion runs
 pvpython elmer/export_images.py            # strain-field images
+.venv/bin/python elmer/revision_runs.py    # convergence and skin-loading runs
+.venv/bin/python revision_analysis.py      # appendix analyses and Fig. 7(c)
 ```
 A full rebuild on a freshly installed system reproduces every number in `elmer/results.json` exactly.
