@@ -180,6 +180,20 @@ def robustness():
     return out
 
 
+def kd_bounds():
+    """Appendix D: the two K_D values reported for the aptamer of [1] (30 pM on the FET, 500 nM in solution)."""
+    out = []
+    for kd in (0.03, 50.0, 500.0):
+        with_params(K_D_nM=kd)
+        th = lambda c: c / (c + m.K_D_ngml)
+        e_pet = DESIGNS["pet_2p5"] / 25e-3
+        ta = th(100.0) * (1 + m.P["kappa_x"] * e_pet)      # matched twin, peak wrist strain, before filtering
+        twin = m.K_D_ngml * ta / (1 - ta) - 100.0 if ta < 1 else float("inf")
+        out.append(dict(K_D_nM=kd, theta_phys_range=[th(8.16), th(141.7)], pet_twin_peak_err_at100_ngml=twin, **headline()))
+    with_params()
+    return out
+
+
 def sensitivity_motion():
     rows = []
     for R in (20e-3, 25e-3, 30e-3, 35e-3, 40e-3):
@@ -263,6 +277,7 @@ if __name__ == "__main__":
                                              for c in (False, True)} for name, epk in DESIGNS.items()}
     res["R13_motion_sensitivity"] = sensitivity_motion()
     res["R15_robustness"] = robustness()
+    res["KD_bounds"] = kd_bounds()
     fig_floor(os.path.join(ROOT, "elmer", "figures", "fig7c_floor.png"))
     json.dump(clean(res), open(os.path.join(ROOT, "elmer", "data", "revision_analysis.json"), "w"), indent=1)
     print("wrote elmer/data/revision_analysis.json and elmer/figures/fig7c_floor.png")
