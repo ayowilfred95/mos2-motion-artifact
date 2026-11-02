@@ -194,6 +194,52 @@ def kd_bounds():
     return out
 
 
+MC_RANGES = {   # joint uncertainty: (low, high, scale); same bounds as Tables D1 and D2, plus beta and delta
+    "dVT_vac_V": (0.027, 0.78, "log"), "K_D_nM": (10.0, 500.0, "log"), "kappa_x": (0.0, 170.0, "lin"),
+    "r_c": (0.0, 0.6, "lin"), "dPhiB_per_strain_eV": (-8.25, -2.75, "lin"), "I_sweat_M": (0.02, 0.1, "lin"),
+    "d_charge_nm": (1.0, 3.0, "lin"), "GF_max": (100.0, 300.0, "lin"),
+    "R_wrist_m": (20e-3, 40e-3, "lin"), "eta": (0.5, 1.0, "lin"), "delta": (-0.05, 0.05, "lin")}
+
+
+def monte_carlo(n=10000, seed=1):
+    """Appendix D: all uncertain inputs drawn together; medians, 95 % intervals and Spearman ranking."""
+    from scipy.stats import spearmanr
+    rng = np.random.default_rng(seed)
+    draws = {k: (np.exp(rng.uniform(np.log(lo), np.log(hi), n)) if sc == "log" else rng.uniform(lo, hi, n))
+             for k, (lo, hi, sc) in MC_RANGES.items()}
+    out = {k: np.empty(n) for k in ("wrist_pctFS", "walking_false_at30_ngml", "pet_twin_err_at100_ngml",
+                                     "base_twin_err_at100_ngml", "contact_share")}
+    model_keys = [k for k in MC_RANGES if k not in ("R_wrist_m", "eta", "delta")]
+    for i in range(n):
+        with_params(**{k: float(draws[k][i]) for k in model_keys})
+        sc = draws["eta"][i] / 0.8                                   # Elmer eps/kappa includes eta = 0.8
+        h = headline(R_wrist=draws["R_wrist_m"][i], eta_scale=sc)
+        out["wrist_pctFS"][i] = h["wrist_artifact_pctFS"]
+        out["walking_false_at30_ngml"][i] = h["walking_false_at30_ngml"]
+        out["contact_share"][i] = h["contact_share"]
+        fs = m.dVT_max_sweat() / m.P["V_ov"]
+        th = theta(100.0)
+        for key, d in (("pet_twin_err_at100_ngml", "pet_2p5"), ("base_twin_err_at100_ngml", "baseline")):
+            eps = DESIGNS[d] * sc / draws["R_wrist_m"][i]
+            res = fs * th * m.P["kappa_x"] * eps - draws["delta"][i] * m.rel_current_change_strain(eps, m.P["V_ov"])
+            ta = (fs * th + res) / fs                                # twin output read through the calibration
+            out[key][i] = abs(m.K_D_ngml * ta / (1 - ta) - 100.0) if 0 <= ta < 1 else np.inf
+    with_params()
+    summ = {}
+    for k, v in out.items():
+        fin = np.isfinite(v)
+        vs = np.sort(v)                                              # saturated draws (inf) sort last
+        summ[k] = dict(median=float(vs[n // 2]), p2_5=float(vs[int(0.025 * n)]), p97_5=float(vs[int(0.975 * n)]),
+                       frac_saturated=float(1 - fin.mean()),
+                       spearman={p: float(abs(spearmanr(draws[p], np.where(fin, v, 1e9))[0])) for p in MC_RANGES})
+    summ["P_pet_twin_below_1ngml"] = float(np.mean(out["pet_twin_err_at100_ngml"] < 1.0))
+    summ["P_base_twin_below_1ngml"] = float(np.mean(out["base_twin_err_at100_ngml"] < 1.0))
+    summ["P_wrist_above_10pctFS"] = float(np.mean(out["wrist_pctFS"] > 10.0))
+    summ["P_contact_share_above_half"] = float(np.mean(out["contact_share"] > 0.5))
+    summ["n"] = n
+    return summ
+
+
 def sensitivity_motion():
     rows = []
     for R in (20e-3, 25e-3, 30e-3, 35e-3, 40e-3):
@@ -278,6 +324,7 @@ if __name__ == "__main__":
     res["R13_motion_sensitivity"] = sensitivity_motion()
     res["R15_robustness"] = robustness()
     res["KD_bounds"] = kd_bounds()
+    res["monte_carlo"] = monte_carlo()
     fig_floor(os.path.join(ROOT, "elmer", "figures", "fig7c_floor.png"))
     json.dump(clean(res), open(os.path.join(ROOT, "elmer", "data", "revision_analysis.json"), "w"), indent=1)
     print("wrote elmer/data/revision_analysis.json and elmer/figures/fig7c_floor.png")
