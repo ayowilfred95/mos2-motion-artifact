@@ -325,6 +325,7 @@ if __name__ == "__main__":
     res["R15_robustness"] = robustness()
     res["KD_bounds"] = kd_bounds()
     res["monte_carlo"] = monte_carlo()
+    res["monte_carlo_seed_check"] = {str(sd): monte_carlo(seed=sd) for sd in (2, 3)}   # medians within 5 %
     fig_floor(os.path.join(ROOT, "elmer", "figures", "fig7c_floor.png"))
     json.dump(clean(res), open(os.path.join(ROOT, "elmer", "data", "revision_analysis.json"), "w"), indent=1)
     print("wrote elmer/data/revision_analysis.json and elmer/figures/fig7c_floor.png")
