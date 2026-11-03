@@ -1,0 +1,12 @@
+{
+  "title": "Motion artifacts in flexible MoS2 FET cortisol sensors: simulation code and data",
+  "upload_type": "software",
+  "description": "Python sensor-chain model, Elmer FEM model generators, mesh and solver input files, run scripts and generated data for the paper 'Separating Motion Artifacts from Biomarker Signals in Flexible MoS2 FET Cortisol Sensors: A Coupled Multiphysics Model and Finite-Element Analysis of Strain-Binding Cross-Talk and Mitigation Strategies'.",
+  "creators": [
+    {"name": "Adeyemi, Ayomide", "affiliation": "Kwara State University"},
+    {"name": "Ogunyemi, Victor", "affiliation": "Olabisi Onabanjo University"}
+  ],
+  "license": "MIT",
+  "keywords": ["wearable biosensor", "MoS2 field-effect transistor", "motion artifact", "finite-element analysis", "multiphysics simulation", "cortisol", "Elmer FEM"],
+  "version": "1.0.0"
+}

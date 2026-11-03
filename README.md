@@ -1,8 +1,8 @@
 # Motion artifacts in flexible MoS2 FET cortisol sensors: simulation code and data
 
-Supplementary code and data for *Separating Motion Artifacts from Biomarker Signals in Flexible MoS2 FET Cortisol
-Sensors: A Dynamic Multiphysics and Finite-Element Simulation of Strain-Binding Cross-Talk and Mitigation Strategies*
-(A. Adeyemi, V. Ogunyemi).
+Code and data for *Separating Motion Artifacts from Biomarker Signals in Flexible MoS2 FET Cortisol Sensors:
+A Coupled Multiphysics Model and Finite-Element Analysis of Strain-Binding Cross-Talk and Mitigation Strategies*
+(Ayomide Adeyemi and Victor Ogunyemi), submitted to the *Journal of Computational Electronics*.
 
 ## Contents
 | path | what |
@@ -18,7 +18,8 @@ Sensors: A Dynamic Multiphysics and Finite-Element Simulation of Strain-Binding 
 | `elmer/data/`, `elmer/results.json`, `elmer/comparison.csv` | all generated data |
 | `fem/` | independent scikit-fem cross-check of the laminate mechanics |
 | `elmer/revision_runs.py` | PET and rigid-island mesh convergence (Tables E1, E2); rigid island under skin-imposed curvature (Table E3) |
-| `revision_analysis.py` | twin-sensor worked example (Appendix A), worked examples (Table B1), causal vs zero-phase filtering and mismatch cases (Tables C1, C2), sensitivity and robustness (Tables D1, D2), Fig. 7(c) |
+| `revision_analysis.py` | twin-sensor worked example (Appendix A), worked examples (Table B1), causal vs zero-phase filtering and mismatch cases (Tables C1, C2), sensitivity and robustness (Tables D1, D2), K_D boundary cases and the 10,000-sample Monte Carlo analysis (Table D3; NumPy PCG64, seed 1), Fig. 7(c); results in `elmer/data/revision_analysis.json` |
+| `comsol/` | parameter definitions shared by the Elmer and scikit-fem scripts (`comsol/params.py`), plus reference scripts for a COMSOL version of the model; the COMSOL scripts were not used for any result in the paper |
 
 ## Requirements
 - Python 3.9 or later with the packages in `requirements.txt`
@@ -39,3 +40,9 @@ pvpython elmer/export_images.py            # strain-field images
 .venv/bin/python revision_analysis.py      # appendix analyses and Fig. 7(c)
 ```
 A full rebuild on a freshly installed system reproduces every number in `elmer/results.json` exactly.
+
+## Licence
+Code: MIT licence (see `LICENSE`). Data and figures: CC BY 4.0.
+
+## Citation
+If you use this code or data, please cite the paper and this archive (see `CITATION.cff`).

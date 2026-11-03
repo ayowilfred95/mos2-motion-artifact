@@ -7,7 +7,7 @@ Run every Elmer model of the paper and assemble the results.
   4. elmer/results.json (same keys as figures/results_python.json), elmer/comparison.csv, figs 3-8 in
      elmer/figures, elmer/ELMER_METHODS.md
 
-Elmer runs inside the OrbStack Linux machine "elmer" (see HOW_TO_OPEN_ELMER.md).
+Elmer runs inside a Linux virtual machine named "elmer" (called through `orb -m elmer`); see README.md.
 Usage: python elmer/run_elmer.py
 """
 import json
