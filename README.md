@@ -1,5 +1,7 @@
 # Motion artifacts in flexible MoS2 FET cortisol sensors: simulation code and data
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23911041.svg)](https://doi.org/10.5281/zenodo.23911041)
+
 Code and data for *Separating Motion Artifacts from Biomarker Signals in Flexible MoS2 FET Cortisol Sensors:
 A Coupled Multiphysics Model and Finite-Element Analysis of Strain-Binding Cross-Talk and Mitigation Strategies*
 (Ayomide Adeyemi and Victor Ogunyemi), submitted to the *Journal of Computational Electronics*.
@@ -50,4 +52,4 @@ This repository uses two licences:
 | CC BY 4.0 (`LICENSE-DATA`) | generated data and figures: `elmer/data/`, `elmer/results.json`, `elmer/comparison.csv`, `elmer/figures/`, `figures/` |
 
 ## Citation
-If you use this code or data, please cite the paper and this archive (see `CITATION.cff`).
+If you use this code or data, please cite the paper and this archive: Adeyemi, A. and Ogunyemi, V. (2026). *Motion artifacts in flexible MoS2 FET cortisol sensors: simulation code and data* (v1.0.0). Zenodo. https://doi.org/10.5281/zenodo.23911041 (see also `CITATION.cff`).
