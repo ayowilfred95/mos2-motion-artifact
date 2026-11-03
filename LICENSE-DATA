@@ -1,0 +1,19 @@
+Data and figures licence: Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Copyright (c) 2026 Ayomide Adeyemi and Victor Ogunyemi
+
+The generated data and figures in this repository are licensed under CC BY 4.0:
+https://creativecommons.org/licenses/by/4.0/legalcode
+
+This covers:
+  elmer/data/          finite-element and sensor-chain results (.json, .npz)
+  elmer/results.json   collected results
+  elmer/comparison.csv design comparison
+  elmer/figures/       figures and strain-field images
+  figures/             figure data (results.json, results_python.json)
+
+All other files (source code, model generators, Elmer mesh and solver input
+files, run scripts) are licensed under the MIT licence; see LICENSE.
+
+You may share and adapt the data and figures for any purpose, provided you give
+appropriate credit by citing the paper and this repository (see CITATION.cff).

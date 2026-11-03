@@ -1,9 +1,11 @@
 cff-version: 1.2.0
-message: "If you use this code or data, please cite it as below."
+message: "If you use this code or data, please cite it as below. Code is licensed under MIT (LICENSE); generated data and figures are licensed under CC BY 4.0 (LICENSE-DATA)."
 title: "Motion artifacts in flexible MoS2 FET cortisol sensors: simulation code and data"
 version: 1.0.0
 date-released: 2026-11-03
-license: MIT
+license:
+  - MIT
+  - CC-BY-4.0
 repository-code: "https://github.com/ayowilfred95/mos2-motion-artifact"
 authors:
   - given-names: Ayomide

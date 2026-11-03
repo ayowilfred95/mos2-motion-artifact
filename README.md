@@ -42,7 +42,12 @@ pvpython elmer/export_images.py            # strain-field images
 A full rebuild on a freshly installed system reproduces every number in `elmer/results.json` exactly.
 
 ## Licence
-Code: MIT licence (see `LICENSE`). Data and figures: CC BY 4.0.
+This repository uses two licences:
+
+| licence | applies to |
+|---|---|
+| MIT (`LICENSE`) | source code, model generators, Elmer mesh (`.grd`) and solver (`.sif`) input files, run scripts |
+| CC BY 4.0 (`LICENSE-DATA`) | generated data and figures: `elmer/data/`, `elmer/results.json`, `elmer/comparison.csv`, `elmer/figures/`, `figures/` |
 
 ## Citation
 If you use this code or data, please cite the paper and this archive (see `CITATION.cff`).

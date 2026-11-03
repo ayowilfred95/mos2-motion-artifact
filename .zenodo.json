@@ -3,10 +3,25 @@
   "upload_type": "software",
   "description": "Python sensor-chain model, Elmer FEM model generators, mesh and solver input files, run scripts and generated data for the paper 'Separating Motion Artifacts from Biomarker Signals in Flexible MoS2 FET Cortisol Sensors: A Coupled Multiphysics Model and Finite-Element Analysis of Strain-Binding Cross-Talk and Mitigation Strategies'.",
   "creators": [
-    {"name": "Adeyemi, Ayomide", "affiliation": "Kwara State University"},
-    {"name": "Ogunyemi, Victor", "affiliation": "Olabisi Onabanjo University"}
+    {
+      "name": "Adeyemi, Ayomide",
+      "affiliation": "Kwara State University"
+    },
+    {
+      "name": "Ogunyemi, Victor",
+      "affiliation": "Olabisi Onabanjo University"
+    }
   ],
   "license": "MIT",
-  "keywords": ["wearable biosensor", "MoS2 field-effect transistor", "motion artifact", "finite-element analysis", "multiphysics simulation", "cortisol", "Elmer FEM"],
-  "version": "1.0.0"
+  "keywords": [
+    "wearable biosensor",
+    "MoS2 field-effect transistor",
+    "motion artifact",
+    "finite-element analysis",
+    "multiphysics simulation",
+    "cortisol",
+    "Elmer FEM"
+  ],
+  "version": "1.0.0",
+  "notes": "Licensing: source code, model generators, Elmer input files and run scripts are licensed under MIT (LICENSE). Generated data and figures (elmer/data/, elmer/results.json, elmer/comparison.csv, elmer/figures/, figures/) are licensed under CC BY 4.0 (LICENSE-DATA)."
 }
